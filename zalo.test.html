@@ -1,0 +1,258 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+</head>
+
+<body>
+    <script type="text/javascript">
+        function browserLanguage() {
+            var lang;
+            if (navigator.userAgent && (lang = navigator.userAgent.match(/android.*\W(\w\w)-(\w\w)\W/i))) {
+                lang = lang[ 1 ];
+            }
+            if (!lang && navigator) {
+                if (navigator.language) {
+                    lang = navigator.language;
+                } else if (navigator.browserLanguage) {
+                    lang = navigator.browserLanguage;
+                } else if (navigator.systemLanguage) {
+                    lang = navigator.systemLanguage;
+                } else if (navigator.userLanguage) {
+                    lang = navigator.userLanguage;
+                }
+                lang = lang.substr(0, 2);
+            }
+
+            return lang;
+        }
+
+        function uriQuery(currentUri, queryString) {
+            if (queryString) {
+                queryString = queryString.substring(1).replace(/\+/g, '%20');
+                if (/\/msg\/text/i.test(currentUri)) {
+                    currentUri = currentUri + queryString;
+                } else {
+                    currentUri = currentUri.replace(/\/$/, "") + '?' + queryString;
+                }
+            }
+
+            return currentUri;
+        }
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? undefined : decodeURIComponent(results[ 1 ].replace(/\+/g, " "));
+        }
+
+        function getLinkLandingPage() {
+            var redirect = "http://zaloapp.com/";
+            var path = document.location.pathname;
+
+            if (path.indexOf("/qr/jp/") >= 0) {
+                var jp = path.substr(7, path.length);
+                redirect = "http://zaloapp.com/qr/jp/gd?jp=" + jp;
+            }
+
+            //                document.location.replace(redirect);
+            return redirect;
+        }
+
+        function iphoneApp() {
+
+            var currentUri = document.location.pathname,
+                queryString = location.search,
+                referre = (document.referrer || ""),
+                URL = {
+                    scheme: "zalo:/",
+                    itune: "itms-apps://itunes.apple.com/us/app/zalo-nhan-gui-yeu-thuong/id579523206?mt=8",
+                    lp: "http://zaloapp.com/"
+                };
+
+            currentUri = currentUri.replace(/^\/R\//g, '/');
+
+            if (!queryString && /^\/shop\/[^\/?]+$/.test(currentUri)) {
+                currentUri = currentUri + "/";
+            }
+
+            var iframe = document.createElement('iframe');
+            iframe.src = URL.scheme + uriQuery(currentUri, queryString);
+            iframe.setAttribute("height", 0);
+            iframe.setAttribute("width", 0);
+            iframe.style.display = "none";
+            document.body.appendChild(iframe);
+
+            var ttime = { delay: 300, elapsed: 400 };
+            if (ua.indexOf("os 6_") != -1) {
+                ttime = { delay: 200, elapsed: 300 };
+            }
+
+            if (ua.indexOf("os 9_") != -1) {
+                ttime = { delay: 800, elapsed: 900 };
+            }
+
+            var time = (new Date()).getTime();
+            setTimeout(function () {
+                var now = (new Date()).getTime();
+                if ((now - time) < ttime.elapsed) {
+                    if (!(redirect === undefined)) {
+                        document.location.replace(redirect);
+                    } else {
+                        iframe.src = URL.itune;
+                    }
+                }
+                setTimeout(function () {
+                    if (referre.length) {
+                        history.back();
+                    } else {
+                        document.location.replace(URL.lp);
+                    }
+                }, 200);
+            }, ttime.delay);
+
+        }
+
+        function iphone9App() {
+            var currentUri = document.location.pathname,
+                queryString = location.search;
+            currentUri = currentUri.replace(/^\/R\//g, '/');
+            if (!queryString && /^\/shop\/[^\/?]+$/.test(currentUri)) {
+                currentUri = currentUri + "/";
+            }
+            // window.location = 'zalo:/' + uriQuery(currentUri, queryString);
+            alert('zalo:/' + uriQuery(currentUri, queryString))
+            // setTimeout(function () {
+            //     window.location = 'itms-apps://itunes.apple.com/us/app/zalo-nhan-gui-yeu-thuong/id579523206?mt=8'
+            // }, 500);
+        }
+
+        function androidApp() {
+            var INTENT = "";
+            var currentUri = document.location.pathname;
+            var queryString = location.search;
+            var referre = (document.referrer || "");
+            var lp = "http://zaloapp.com/";
+
+            if (!(redirect === undefined) && redirect != "") {
+                INTENT = "intent://zaloapp.com{{ACTION}}#Intent;scheme=zalo;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.zing.zalo;S.browser_fallback_url=" + redirect + ";end";
+            } else if (currentUri.indexOf("/qr/jp/") >= 0) {
+                INTENT = "intent://zaloapp.com{{ACTION}}#Intent;scheme=zalo;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.zing.zalo;S.browser_fallback_url=" + getLinkLandingPage() + ";end";
+            } else {
+                //                    INTENT = "intent://zaloapp.com{{ACTION}}#Intent;scheme=zalo;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.zing.zalo;S.browser_fallback_url=" + lp + ";end";
+                INTENT = "intent://zaloapp.com{{ACTION}}#Intent;scheme=zalo;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.zing.zalo;end";
+            }
+
+
+            var cc = (document.referrer || "");
+
+            currentUri = currentUri.replace(/^\/R\//, '/');
+            if (/^\/run$/.test(currentUri)) {
+                currentUri = currentUri + "/";
+            }
+
+            currentUri = uriQuery(currentUri, queryString);
+            var iframe = document.createElement('iframe');
+            iframe.src = INTENT.replace(/{{ACTION}}/, currentUri);
+            iframe.setAttribute("height", 0);
+            iframe.setAttribute("width", 0);
+            iframe.style.display = "none";
+
+            if (ua.match(/chrome/)) {
+                window.location.href = iframe.src;
+            }
+            else if (ua.match(/android 4.2/)) {
+                document.body.appendChild(iframe);
+                setTimeout(function () {
+                    //                        history.back();
+                    document.location.replace('http://zaloapp.com/');
+                }, 100);
+            }
+            else if (ua.match(/zalo/)) {
+                window.location.href = iframe.src;
+            }
+            else {
+                document.body.appendChild(iframe);
+                setTimeout(function () {
+                    if (referre.length) {
+                        //                            history.back();
+                        document.location.replace('http://zaloapp.com/');
+                    } else {
+                        document.location.replace('http://zaloapp.com/');
+                    }
+                }, 100);
+            }
+        }
+
+        function windowsPhoneApp() {
+            var currentUri = document.location.pathname,
+                queryString = location.search,
+                referre = (document.referrer || ""),
+                URL = {
+                    scheme: "zalo:/",
+                    windows: "http://windowsphone.com/s?appid=ca5b631e-1cb9-4e39-b03e-9499443afe73",
+                    lp: "http://zaloapp.com/"
+                };
+
+            currentUri = currentUri.replace(/^\/R\//g, '/');
+
+            if (!queryString && /^\/shop\/[^\/?]+$/.test(currentUri)) {
+                currentUri = currentUri + "/";
+            }
+
+            var iframe = document.createElement('iframe');
+            iframe.src = URL.scheme + uriQuery(currentUri, queryString);
+            iframe.setAttribute("height", 0);
+            iframe.setAttribute("width", 0);
+            iframe.style.display = "none";
+            document.body.appendChild(iframe);
+
+            var ttime = { delay: 500, elapsed: 3000 };
+
+            var time = (new Date()).getTime();
+            setTimeout(function () {
+                var now = (new Date()).getTime();
+                if ((now - time) < ttime.elapsed) {
+                    if (!(redirect === undefined) && redirect != "") {
+                        document.location.replace(redirect);
+                    } else {
+                        iframe.src = URL.windows;
+                    }
+                }
+                setTimeout(function () {
+                    if (referre.length) {
+                        history.back();
+                    } else {
+                        document.location.replace(URL.lp);
+                    }
+                }, 300);
+            }, ttime.delay);
+
+        }
+
+        var ua = navigator.userAgent;
+        ua = ua.toLowerCase();
+        var currentUri = document.location.pathname;
+        var redirect = getParameterByName('redirect');
+        
+        iphone9App()
+
+        // if (ua.indexOf('iemobile') !== -1 || ua.indexOf('windows phone') !== -1) {
+        //     windowsPhoneApp();
+        // } else if (ua.indexOf('iphone') !== -1 || ua.indexOf('ipod') !== -1 || ua.indexOf('ipad') !== -1) {
+        //     if (ua.indexOf("os 9_") !== -1 || ua.indexOf("os 10_") !== -1) {
+        //         iphone9App();
+        //     } else {
+        //         iphoneApp();
+        //     }
+        // } else if (ua.indexOf('android') !== -1) {
+        //     androidApp();
+        // } else {
+        //     document.location.replace('http://zaloapp.com/');
+        // }
+    </script>
+</body>
+
+</html>
