@@ -283,6 +283,8 @@ function queryRatingMedia(){
 
 
 
+document.dispatchEvent(new CustomEvent('nhtcss.buttonInit'))
+
 let IMAGES = []
 let VIDEOS = []
 let APPENDED = {
