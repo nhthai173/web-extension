@@ -122,8 +122,6 @@ function copyCB(text) {
 
 
 
-
-
 /* ============ INIT FUNCTIONS ============ */
 let INIT_FUNCTIONS = {}
 
@@ -272,281 +270,298 @@ const ICONS = {
 
 /* ====== START nhtcss BUTTON ====== */
 
-const nhtModalPosition = (timeout = 0) => {
-    setTimeout(() => {
-        const modalSizeW = parseFloat(getComputedStyle(nhtModal).width.replace('px', ''))
-        const modalSizeH = parseFloat(getComputedStyle(nhtModal).height.replace('px', ''))
-        if (nhtModal.classList.contains('show')) {
-            if(nhtModal.classList.contains('expand')){
-                nhtModal.style.margin = '30px'
-                nhtModal.style.width = '100%'
-                nhtModal.style.maxWidth = '600px'
-                nhtModal.style.height = '100%'
-                nhtModal.style.maxHeight = 'calc(100vh - 60px)'
-                nhtModal.style.top = '0'
-                nhtModal.style.left = '50%'
-                nhtModal.style.transform = 'translateX(-50%)'
-            }else{
-                nhtModal.style.margin = ''
-                nhtModal.style.width = ''
-                nhtModal.style.maxWidth = ''
-                nhtModal.style.height = ''
-                nhtModal.style.maxHeight = ''
-                nhtModal.style.top = ''
-                nhtModal.style.left = ''
-                nhtModal.style.transform = ''
+/**
+ * 
+ * @param {string} appendType "appendChild" | "prepend" | "after" | "before"
+ * @param {string} appendEl DOM element to append to
+ * @returns 
+ */
+const nhtcss_init = (appendType, appendEl) => {
 
-                if (modalSizeH > window.innerHeight) {
-                    nhtModal.style.height = window.innerHeight + 'px'
-                }
-                if (modalSizeW > window.innerWidth) {
-                    nhtModal.style.width = window.innerWidth - 60 * 1 + 'px'
-                }
-                if (nhtcss_pos.x < window.innerWidth / 2) {
-                    nhtModal.style.left = nhtcss_pos.x * 1 + 40 * 1 + 'px'
+    const modalPosition = (timeout = 0) => {
+        setTimeout(() => {
+            const modalSizeW = parseFloat(getComputedStyle(Modal).width.replace('px', ''))
+            const modalSizeH = parseFloat(getComputedStyle(Modal).height.replace('px', ''))
+            if (Modal.classList.contains('show')) {
+                if (Modal.classList.contains('expand')) {
+                    Modal.style.margin = '30px'
+                    Modal.style.width = '100%'
+                    Modal.style.maxWidth = '600px'
+                    Modal.style.height = '100%'
+                    Modal.style.maxHeight = 'calc(100vh - 60px)'
+                    Modal.style.top = '0'
+                    Modal.style.left = '50%'
+                    Modal.style.transform = 'translateX(-50%)'
                 } else {
-                    nhtModal.style.left = nhtcss_pos.x * 1 - 40 * 1 - modalSizeW * 1 + 'px'
-                }
-                if (window.innerHeight - nhtcss_pos.y > modalSizeH) {
-                    nhtModal.style.top = nhtcss_pos.y * 1 - 25 * 1 + 'px'
-                } else if (nhtcss_pos.y > modalSizeH) {
-                    nhtModal.style.top = nhtcss_pos.y * 1 - modalSizeH * 1 + 25 * 1 + 'px'
-                }
+                    Modal.style.margin = ''
+                    Modal.style.width = ''
+                    Modal.style.maxWidth = ''
+                    Modal.style.height = ''
+                    Modal.style.maxHeight = ''
+                    Modal.style.top = ''
+                    Modal.style.left = ''
+                    Modal.style.transform = ''
 
+                    if (modalSizeH > window.innerHeight) {
+                        Modal.style.height = window.innerHeight + 'px'
+                    }
+                    if (modalSizeW > window.innerWidth) {
+                        Modal.style.width = window.innerWidth - 60 * 1 + 'px'
+                    }
+                    if (Pos.x < window.innerWidth / 2) {
+                        Modal.style.left = Pos.x * 1 + 40 * 1 + 'px'
+                    } else {
+                        Modal.style.left = Pos.x * 1 - 40 * 1 - modalSizeW * 1 + 'px'
+                    }
+                    if (window.innerHeight - Pos.y > modalSizeH) {
+                        Modal.style.top = Pos.y * 1 - 25 * 1 + 'px'
+                    } else if (Pos.y > modalSizeH) {
+                        Modal.style.top = Pos.y * 1 - modalSizeH * 1 + 25 * 1 + 'px'
+                    }
+
+                }
+            } else {
+                // Modal.style.top = '0'
+                // Modal.style.left = '-200%'
             }
-        } else {
-            // nhtModal.style.top = '0'
-            // nhtModal.style.left = '-200%'
-        }
-    }, timeout);
-}
+        }, timeout);
+    }
 
-const nhtcssMove = (e) => {
-    if (!nhtcss.classList.contains("nht-active")) {
-        let x, y
-        if (e.type === "touchmove") {
-            y = e.touches[ 0 ].clientY
-            x = e.touches[ 0 ].clientX + "px";
+    const move = (e) => {
+        if (!nhtcss.classList.contains("nht-active")) {
+            let x, y
+            if (e.type === "touchmove") {
+                y = e.touches[ 0 ].clientY
+                x = e.touches[ 0 ].clientX + "px";
+            } else {
+                y = e.clientY
+                x = e.clientX
+            }
+            if (x > window.innerWidth || y > window.innerHeight) {
+                nhtcss.dispatchEvent(new Event("mouseup"))
+                return
+            }
+            Pos.x = x
+            Pos.y = y
+            nhtcss.style.top = y + "px";
+            nhtcss.style.left = x + "px";
+            modalPosition(210)
+            localStorage.setItem('nhtcssBtnPos', JSON.stringify({ x, y }))
+        }
+    };
+
+    const mouseDown = (e) => {
+        Pos.oldX = Pos.x
+        Pos.oldY = Pos.y
+        Pos.y = parseFloat(getComputedStyle(nhtcss).top.replace('px', ''))
+        Pos.x = parseFloat(getComputedStyle(nhtcss).left.replace('px', ''))
+        if (e.type === "mousedown") {
+            window.addEventListener("mousemove", move);
         } else {
-            y = e.clientY
-            x = e.clientX
+            window.addEventListener("touchmove", move);
         }
-        if (x > window.innerWidth || y > window.innerHeight) {
-            nhtcss.dispatchEvent(new Event("mouseup"))
-            return
+        nhtcss.style.transition = "none";
+        Modal.style.transition = "none";
+    };
+
+    const mouseUp = (e) => {
+        if (e.type === "mouseup") {
+            window.removeEventListener("mousemove", move);
+        } else {
+            window.removeEventListener("touchmove", move);
         }
-        nhtcss_pos.x = x
-        nhtcss_pos.y = y
-        nhtcss.style.top = y + "px";
-        nhtcss.style.left = x + "px";
-        nhtModalPosition(210)
+        snapToSide();
+        nhtcss.style.transition = "0.3s ease-in-out left";
+        Modal.style.transition = "all 0.2s ease-in-out";
+    };
+
+    const snapToSide = (x, y) => {
+        // const wrapperElement = document.body;
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        if (!x || !y) {
+            x = parseFloat(getComputedStyle(nhtcss).left.replace('px', ''))
+            y = parseFloat(getComputedStyle(nhtcss).top.replace('px', ''))
+        }
+        if (y < 50) {
+            y = 50
+            nhtcss.style.top = y + "px"
+        }
+        if (y > windowHeight - 50) {
+            y = windowHeight - 50
+            nhtcss.style.top = y + "px";
+        }
+        if (x < windowWidth / 2) {
+            x = 30
+            nhtcss.style.left = x + "px";
+            nhtcss.classList.remove('right');
+            nhtcss.classList.add('left');
+        } else {
+            x = windowWidth - 45
+            nhtcss.style.left = x + "px";
+            nhtcss.classList.remove('left');
+            nhtcss.classList.add('right');
+        }
+        Pos.x = x
+        Pos.y = y
+        modalPosition()
         localStorage.setItem('nhtcssBtnPos', JSON.stringify({ x, y }))
-    }
-};
+    };
 
-const nhtcssMouseDown = (e) => {
-    nhtcss_pos.oldX = nhtcss_pos.x
-    nhtcss_pos.oldY = nhtcss_pos.y
-    nhtcss_pos.y = parseFloat(getComputedStyle(nhtcss).top.replace('px', ''))
-    nhtcss_pos.x = parseFloat(getComputedStyle(nhtcss).left.replace('px', ''))
-    if (e.type === "mousedown") {
-        window.addEventListener("mousemove", nhtcssMove);
-    } else {
-        window.addEventListener("touchmove", nhtcssMove);
-    }
-    nhtcss.style.transition = "none";
-    nhtModal.style.transition = "none";
-};
+    const btnPress = (type = 'toggle') => {
+        // nhtcss.classList.add("nht-active");
+        if (type === 'toggle') {
+            Modal.classList.toggle('show')
+        } else if (type === 'show') {
+            Modal.classList.add('show')
+        } else if (type === 'hide') {
+            Modal.classList.remove('show')
+        }
 
-const nhtcssMouseUp = (e) => {
-    if (e.type === "mouseup") {
-        window.removeEventListener("mousemove", nhtcssMove);
-    } else {
-        window.removeEventListener("touchmove", nhtcssMove);
-    }
-    nhtcssSnapToSide();
-    nhtcss.style.transition = "0.3s ease-in-out left";
-    nhtModal.style.transition = "all 0.2s ease-in-out";
-};
+        modalPosition(210)
 
-const nhtcssSnapToSide = (x, y) => {
-    // const wrapperElement = document.body;
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    if (!x || !y) {
-        x = parseFloat(getComputedStyle(nhtcss).left.replace('px', ''))
-        y = parseFloat(getComputedStyle(nhtcss).top.replace('px', ''))
+        document.dispatchEvent(new Event('nhtcss.click'))
+        if (Modal.classList.contains('show')) {
+            document.dispatchEvent(new Event('nhtcss.modal.show'))
+        } else {
+            document.dispatchEvent(new Event('nhtcss.modal.hide'))
+        }
     }
-    if (y < 50) {
-        y = 50
-        nhtcss.style.top = y + "px"
-    }
-    if (y > windowHeight - 50) {
-        y = windowHeight - 50
-        nhtcss.style.top = y + "px";
-    }
-    if (x < windowWidth / 2) {
-        x = 30
-        nhtcss.style.left = x + "px";
-        nhtcss.classList.remove('right');
-        nhtcss.classList.add('left');
-    } else {
-        x = windowWidth - 45
-        nhtcss.style.left = x + "px";
-        nhtcss.classList.remove('left');
-        nhtcss.classList.add('right');
-    }
-    nhtcss_pos.x = x
-    nhtcss_pos.y = y
-    nhtModalPosition()
-    localStorage.setItem('nhtcssBtnPos', JSON.stringify({ x, y }))
-};
-
-const nhtcssBtnPress = (type = 'toggle') => {
-    // nhtcss.classList.add("nht-active");
-    if (type === 'toggle') {
-        nhtModal.classList.toggle('show')
-    } else if (type === 'show') {
-        nhtModal.classList.add('show')
-    } else if (type === 'hide') {
-        nhtModal.classList.remove('show')
-    }
-    
-    nhtModalPosition(210)
-
-    document.dispatchEvent(new Event('nhtcss.click'))
-    if (nhtModal.classList.contains('show')) {
-        document.dispatchEvent(new Event('nhtcss.modal.show'))
-    } else {
-        document.dispatchEvent(new Event('nhtcss.modal.hide'))
-    }
-}
-
-const nhtcssSettingBtn = () => {
-    `
-    <div class="nhtcss-setting-btn" style="
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    color: #000;
-    left: 50%;
-    bottom: -3px;
-    transform: translateX(-50%);
-    background-color: #fff;
-    line-height: 7px;
-    border-radius: 50%;
-    font-size: 13px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-">a</div>
-    `
-}
 
 
-const nhtcss = (() => {
-    const $nhtcss = document.createElement('div')
-    $nhtcss.className = '' // nhtcss-wrapper
-    $nhtcss.innerHTML = `
-    <div class="nht_modal fluent">
-        <div class="modal-expand">
-            <div class="nht_icon rounded-expand" style="width: 18px;"></div>
-            <div class="nht_icon rounded-compress" style="width: 18px;"></div>
-        </div>
-        <div class="nht_modal-content">
-            <div class="d-flex-center" style="height: 80px">
-                <div class="nht_icon no-data"></div>
+    const nhtcss = (() => {
+        const $nhtcss = document.createElement('nht')
+        $nhtcss.className = '' // nhtcss-wrapper
+        $nhtcss.innerHTML = `
+            <div class="nht_modal fluent">
+                <div class="modal-expand">
+                    <div class="nht_icon rounded-expand" style="width: 18px;"></div>
+                    <div class="nht_icon rounded-compress" style="width: 18px;"></div>
+                </div>
+                <div class="nht_modal-content">
+                    <div class="d-flex-center" style="height: 80px">
+                        <div class="nht_icon no-data"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="nhtcss-btn-wrapper">
-        <div class="nhtcss-btn">
-            <span>nht</span>
-        </div>
-    </div>`
-// <div class="close"><span>&times;</span></div>
-    const element = document.body.appendChild($nhtcss).querySelector('.nhtcss-btn-wrapper')
-    let cPos = localStorage.getItem('nhtcssBtnPos')
-    try {
-        cPos = JSON.parse(cPos)
-        element.style.top = cPos.y + 'px'
-        setTimeout(() => {
-            nhtcssSnapToSide(cPos.x, cPos.y)
-        }, 10);
-    } catch (e) { }
-    return element
-})()
+            <div class="nhtcss-btn-wrapper">
+                <div class="nhtcss-btn">
+                    <span>nht</span>
+                </div>
+            </div>`
+        // <div class="close"><span>&times;</span></div>
+        let element = null
+        if(appendType && appendEl){
+            const $appendEl = document.querySelector(appendEl)
+            if(
+                appendType === 'appendChild' ||
+                appendType === 'prepend' || 
+                appendType === 'after' ||
+                appendType === 'before'){
+                element = $appendEl[appendType]($nhtcss)
+            }
+            element = element.querySelector('.nhtcss-btn-wrapper')
+        }else{
+            element = document.body.appendChild($nhtcss).querySelector('.nhtcss-btn-wrapper')
+        }
+        let cPos = localStorage.getItem('nhtcssBtnPos')
+        try {
+            cPos = JSON.parse(cPos)
+            element.style.top = cPos.y + 'px'
+            setTimeout(() => {
+                snapToSide(cPos.x, cPos.y)
+            }, 10);
+        } catch (e) { }
+        return element
+    })()
 
-const nhtModal = document.querySelector('.nht_modal')
+    const Modal = document.querySelector('.nht_modal')
 
-let nhtcss_pos = {
-    x: 0,
-    y: 0,
-    oldX: 0,
-    oldY: 0
+    let Pos = {
+        x: 0,
+        y: 0,
+        oldX: 0,
+        oldY: 0
+    }
+
+    let KeyMap = {}
+    
+    const nhtcss_init = () => {
+
+        nhtcss.addEventListener("mousedown", mouseDown);
+
+        nhtcss.addEventListener("mouseup", mouseUp);
+
+        nhtcss.addEventListener("touchstart", mouseDown);
+
+        nhtcss.addEventListener("touchend", mouseUp);
+
+        nhtcss.querySelector('.nhtcss-btn').addEventListener("click", (e) => {
+
+            if (
+                Pos.oldX == Pos.x &&
+                Pos.oldY == Pos.y
+            ) {
+                btnPress()
+            }
+
+        });
+
+        document.addEventListener('nhtcss.modal.active', (e) => {
+            let type = 'show'
+            if (e.detail && e.detail.type) type = e.detail.type
+            btnPress(type)
+        })
+
+        window.addEventListener("resize", (e) => {
+            snapToSide();
+        })
+
+        document.body.addEventListener('keydown', (e) => {
+            KeyMap[ e.key ] = true
+            if (KeyMap[ 'Escape' ] === true) {
+                Modal.classList.remove('show')
+                modalPosition(210)
+            } else if (KeyMap[ 'Control' ] && KeyMap[ 'h' ]) {
+                btnPress()
+            }
+        })
+
+        document.body.addEventListener('keyup', (e) => {
+            KeyMap[ e.key ] = false
+        })
+
+        document.querySelector('.nht_modal .modal-expand').addEventListener('click', (e) => {
+            Modal.classList.toggle('expand')
+            modalPosition()
+            if (!Modal.classList.contains('expand')) {
+                Modal.style.transition = 'none'
+                modalPosition(5)
+                setTimeout(() => {
+                    Modal.style.transition = 'all 0.2s ease-in-out'
+                }, 5)
+            }
+            if (Modal.classList.contains('expand')) {
+                document.dispatchEvent(new Event('nhtcss.modal.expand'))
+            } else {
+                document.dispatchEvent(new Event('nhtcss.modal.compress'))
+            }
+        })
+    
+        return {
+            nhtcss,
+            Modal,
+            KeyMap,
+            btnPress,
+            snapToSide,
+            modalPosition
+        }
+
+    }
+
+    return nhtcss_init()
+
 }
-
-let nhtcssKeyMap = {}
-
-nhtcss.addEventListener("mousedown", nhtcssMouseDown);
-
-nhtcss.addEventListener("mouseup", nhtcssMouseUp);
-
-nhtcss.addEventListener("touchstart", nhtcssMouseDown);
-
-nhtcss.addEventListener("touchend", nhtcssMouseUp);
-
-nhtcss.querySelector('.nhtcss-btn').addEventListener("click", (e) => {
-
-    if (
-        nhtcss_pos.oldX == nhtcss_pos.x &&
-        nhtcss_pos.oldY == nhtcss_pos.y
-    ) {
-        nhtcssBtnPress()
-    }
-
-});
-
-document.addEventListener('nhtcss.modal.active', (e) => {
-    let type = 'show'
-    if(e.detail && e.detail.type) type = e.detail.type
-    nhtcssBtnPress(type)
-})
-
-window.addEventListener("resize", (e) => {
-    nhtcssSnapToSide();
-})
-
-document.body.addEventListener('keydown', (e) => {
-    nhtcssKeyMap[ e.key ] = true
-    if (nhtcssKeyMap['Escape'] === true) {
-        nhtModal.classList.remove('show')
-        nhtModalPosition(210)
-    } else if (nhtcssKeyMap['Control'] && nhtcssKeyMap['h']) {
-        nhtcssBtnPress()
-    }
-})
-
-document.body.addEventListener('keyup', (e) => {
-    nhtcssKeyMap[ e.key ] = false
-})
-
-document.querySelector('.nht_modal .modal-expand').addEventListener('click', (e) => {
-    nhtModal.classList.toggle('expand')
-    nhtModalPosition()
-    if (!nhtModal.classList.contains('expand')){
-        nhtModal.style.transition = 'none'
-        nhtModalPosition(5)
-        setTimeout(() => {
-            nhtModal.style.transition = 'all 0.2s ease-in-out'
-        }, 5)
-    }
-    if (nhtModal.classList.contains('expand')){
-        document.dispatchEvent(new Event('nhtcss.modal.expand'))
-    }else{
-        document.dispatchEvent(new Event('nhtcss.modal.compress'))
-    }
-})
 
 /* ====== END nhtcss BUTTON ====== */
 
@@ -574,6 +589,15 @@ function init() {
     }
 }
 
+// Listener for nhtcss button
+document.addEventListener('nhtcss.buttonInit', e => {
+    if (e.detail && e.detail.appendType && e.detail.appendEl) {
+        nhtcss_init(e.detail.appendType, e.detail.appendEl)
+    } else {
+        nhtcss_init()
+    }
+})
+
 // Import Flaticon
 document.dispatchEvent(new Event('import.flaticon'))
 
@@ -592,6 +616,7 @@ setInterval(()=>{
 
 /* ============ nhtcss EVENT ============ */
 /**
+ * nhtcss.buttonInit: Init nhtcss button
  * nhtcss.modal.show: when modal show
  * nhtcss.modal.hide: when modal hide
  * nhtcss.modal.expand: when modal expand
