@@ -1,5 +1,11 @@
+console.log('Started at:', getTime())
+
+function getTime() {
+    return new Date().toLocaleString('vi')
+}
+
 // export function 
-function TogglTrack (token = '') {
+function TogglTrack (token = '', default_start_date = '') {
     const baseUrl = 'https://api.track.toggl.com/api'
 
     const auth = () => {
@@ -55,7 +61,7 @@ function TogglTrack (token = '') {
      */
     const getTimeEntries = async (options = {}) => {
         let { start_date, end_date } = options
-        start_date = start_date || '2022-07-18'
+        start_date = start_date || default_start_date
         end_date = end_date || new Date(new Date().getTime() + 24 * 3600000).toISOString().split('T')[ 0 ]
         if (start_date && end_date) {
             return await _fetch(url(`/v9/me/time_entries?start_date=${start_date}&end_date=${end_date}`), {
@@ -161,19 +167,17 @@ function TogglTrack (token = '') {
 
 }
 
+(async () => {
+    const toggl = TogglTrack('2dcf511405f3750c754336711bd749d9', '2022-07-19')
+    // const time = await toggl.getTimeEntries()
+    // const startTimer = await toggl.startTimeEntry({
+    //     description: 'nht_test_js',
+    //     workspace_id: 6482073,
+    //     tags: ['DevTest']
+    // })
+    // const current = await toggl.getCurrentTimeEntry()
+    const stopTimer = await toggl.stopTimeEntry(6482073)
 
-
-
-// (async () => {
-//     const toggl = TogglTrack('2dcf511405f3750c754336711bd749d9')
-//     // const time = await toggl.getTimeEntries()
-//     // const startTimer = await toggl.startTimeEntry({
-//     //     description: 'nht_test_js',
-//     //     workspace_id: 6482073,
-//     //     tags: ['DevTest']
-//     // })
-//     const current = await toggl.getCurrentTimeEntry()
-//     // const stopTimer = await toggl.stopTimeEntry(6482073)
-
-//     console.log(current)
-// })()
+    console.log(getTime())
+    console.log(stopTimer)
+})()
