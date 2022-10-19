@@ -1,5 +1,15 @@
 # nht Web Extension Changelog
 
+### Oct 19 2022
+- Added Youtube Low-power Mode
+- Complete UI for Toggl
+
+### Oct 18 2022
+#### Added Facebook Low-power Mode
+#### Improved Shopee
+- Video is now muted by default
+- Support auto play video
+
 ### Oct 16 2022
 #### Improved Shopee
 - Improved UX
