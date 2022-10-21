@@ -29,6 +29,64 @@ body.lpm{
 }
 
 
+/* Change primary color */
+/* :root{
+    --custom-primary: 210, 110, 100;
+    --custom-primary-dark: 240, 144, 127;
+    --custom-primary-lpm: 240, 144, 127;
+    --custom-filter-accent: invert(40%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(5deg) brightness(90%) contrast(86%);
+    --custom-icon-filter: ;
+    --blue-tick-filter: ;
+} */
+
+:root, * {
+
+    --accent: rgb(var(--custom-primary));
+    --base-blue: rgb(var(--custom-primary));
+    --blue-link: rgba(var(--custom-primary), .9);
+    --primary-button-background: rgb(var(--custom-primary));
+    --primary-button-pressed: rgba(var(--custom-primary), .45);
+    --primary-deemphasized-button-text: rgba(var(--custom-primary), .9);
+    --primary-deemphasized-button-background: rgba(var(--custom-primary), 0.2);
+    --primary-deemphasized-button-pressed: rgba(var(--custom-primary), 0.2);
+    --primary-deemphasized-button-pressed-overlay: rgba(var(--custom-primary), 0.15);
+    --progress-ring-blue-foreground: rgb(var(--custom-primary));
+    --toggle-active-background: rgb(var(--custom-primary));
+    /* --toggle-button-active-background: #E6F2FF; */
+
+    --filter-accent: var(--custom-filter-accent);
+    /* --filter-blue-link-icon: invert(73%) sepia(29%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(103.25%) hue-rotate(189deg) brightness(101%) contrast(101%); */
+    /* --filter-primary-icon: invert(89%) sepia(6%) hue-rotate(185deg); */
+
+    /* --filter-secondary-icon: invert(62%) sepia(98%) saturate(12%) hue-rotate(175deg) brightness(90%) contrast(96%); */
+
+}
+
+.dark :root,
+.dark * {
+    --custom-primary: var(--custom-primary-dark);
+}
+
+.dark.lpm :root,
+.dark.lpm * {
+    --custom-primary: var(--custom-primary-lpm);
+}
+
+.custom-icon-filter{
+    filter: var(--custom-icon-filter)!important;
+    -webkit-filter: var(--custom-icon-filter)!important;
+}
+.blue-tick-filter{
+    filter: var(--blue-tick-filter)!important;
+    -webkit-filter: var(--blue-tick-filter)!important;
+}
+
+
+
+
+
+
+/* Default root for darkmode */
 /* :root {
     --fds-black: black;
     --fds-black-alpha-05: rgba(0, 0, 0, 0.05);
