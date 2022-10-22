@@ -353,6 +353,9 @@
 .d-none{
   display: none!important;
 }
+.lpm .d-none-lpm{
+  display: none!important;
+}
 
 .rounded-center {
   border-radius: 50%;
