@@ -5,10 +5,9 @@ const REMOVE_LEFT_SIDEBAR = true
 const REMOVE_LEFT_SIDEBAR_PATH = [ '/' ]
 const REMOVE_RIGHT_SIDEBAR = true
 const REMOVE_RIGHT_SIDEBAR_PATH = [ '/' ]
-const REMOVE_REEL_BACKGROUND = false
-const REMOVE_REEL_BACKGROUND_IN_LPM = true
-const REMOVE_POST_BACKGROUND = false
-const REMOVE_POST_BACKGROUND_IN_LPM = true
+const REMOVE_REEL_BACKGROUND = false // always remove
+const REMOVE_REEL_BACKGROUND_IN_LPM = true // only remove in lpm
+const REMOVE_POST_BACKGROUND_IN_LPM = true // only remove in lpm
 
 // leave empty to use default
 const CUSTOM_PRIMARY_COLOR = '210, 110, 100'
@@ -106,7 +105,7 @@ const customPage = () => {
         }
 
         // Remove post background
-        if (REMOVE_POST_BACKGROUND || (REMOVE_POST_BACKGROUND_IN_LPM && USE_LOW_POWER_MODE)) {
+        if (REMOVE_POST_BACKGROUND_IN_LPM) {
             if (THEME == 'dark' && el.getAttribute('style')) {
                 const style = el.getAttribute('style')
                 // const bg = getComputedStyle(el).backgroundColor.trim()
@@ -189,7 +188,7 @@ const customPage = () => {
     }
 
     // Remove background image in reel
-    if (REMOVE_REEL_BACKGROUND || (REMOVE_REEL_BACKGROUND_IN_LPM && USE_LOW_POWER_MODE && THEME === 'dark')) {
+    if (REMOVE_REEL_BACKGROUND || REMOVE_REEL_BACKGROUND_IN_LPM) {
         document.querySelectorAll('img').forEach(img => {
             if (url.includes('/reel')) {
                 const height = parseFloat(getComputedStyle(img).height)
@@ -198,8 +197,10 @@ const customPage = () => {
                 const src = img.src
                 // console.log(img, height, width, !src.includes('static'))
                 if (!isNaN(ratio) && ratio !== 1 && width > height && !src.includes('static')) {
+                    img.classList.remove('d-none', 'd-none-lpm')
                     // reelBg.src = ''
-                    img.classList.add('d-none')
+                    if(REMOVE_REEL_BACKGROUND) img.classList.add('d-none')
+                    if(REMOVE_REEL_BACKGROUND_IN_LPM) img.classList.add('d-none-lpm')
                 }
             }
         })
