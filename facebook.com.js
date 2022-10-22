@@ -14,8 +14,8 @@ const REMOVE_POST_BACKGROUND_IN_LPM = true
 const CUSTOM_PRIMARY_COLOR = '210, 110, 100'
 const CUSTOM_PRIMARY_COLOR_DARK = '240, 144, 127'
 const CUSTOM_PRIMARY_COLOR_LPM = '240, 144, 127'
-const CUSTOM_SECONDARY_COLOR = '210, 110, 100'
-const FILTER_ACCENT = 'invert(65%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(306deg) brightness(114%) contrast(94%)'
+const CUSTOM_SECONDARY_COLOR = '210, 110, 100' // for /groups
+const FILTER_ACCENT = 'invert(65%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(313deg) brightness(120%) contrast(69%)'
 const FILTER_PRIMARY_FOR_BLACK_BASEED = 'invert(23%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(483deg) brightness(140%) contrast(70%)'
 const FILTER_BLUE_TICK = 'invert(5%) sepia(54%) hue-rotate(500deg) brightness(139%) contrast(80%) saturate(154%)'
 
@@ -95,11 +95,11 @@ const customPage = () => {
 
     document.querySelectorAll('div').forEach(el => {
 
-        // Custom secondary color
+        // Custom secondary color (in /groups)
         if (CUSTOM_SECONDARY_COLOR) {
             const secondaryAttr = getComputedStyle(el).getPropertyValue('--secondary-text')
-            // secondary blue in dark -> custom secondary
-            if (secondaryAttr.includes('69ceff')) {
+            if (!secondaryAttr.toLowerCase().includes('65676b') &&
+                !secondaryAttr.toLowerCase().includes('b0b3b8')) {
                 el.style.setProperty('--secondary-text', 'rgb(var(--custom-primary))')
                 el.style.setProperty('--secondary-icon', 'rgb(var(--custom-primary))')
             }
@@ -220,14 +220,24 @@ const customPage = () => {
 
         // blue tick
         if (FILTER_BLUE_TICK) {
-            if (src.includes('/rsrc.php/v3/yT/r/kMNnZ-qWOsv')) {
-                if (pos.includes('-73px -84px') ||
-                    pos.includes('-173px -59px') ||
-                    pos.includes('-168px -166px')) {
-                    console.log('blue tick', el)
-                    el.classList.add('blue-tick-filter')
+            const list = [
+                {
+                    url: '/rsrc.php/v3/yT/r/kMNnZ-qWOsv',
+                    pos: [ '-73px -84px', '-173px -59px', '0px -187px', '-168px -166px' ]
+                },
+                {
+                    url: '/rsrc.php/v3/ym/r/5TbF9VXKtYW',
+                    pos: [ '-73px -84px', '-173px -59px', '0px -187px', '-168px -166px' ]
                 }
-            }
+            ]
+            list.forEach(item => {
+                if (src.includes(item.url)) {
+                    item.pos.forEach(p => {
+                        if (pos.includes(p))
+                            el.classList.add('blue-tick-filter')
+                    })
+                }
+            })
         }
 
     })
