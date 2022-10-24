@@ -30,6 +30,11 @@ html[dark].lpm {
     background-color: #000!important;
 }
 
+/*  */
+.html5-video-player.ytp-fit-cover-video.ytp-rounded-miniplayer.ytp-large-width-mode.playing-mode{
+    border-radius: 16px;
+}
+
 /* html[dark], [dark] {
     --yt-spec-base-background: #0f0f0f;
     --yt-spec-raised-background: #212121;
