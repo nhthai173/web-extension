@@ -16,7 +16,7 @@ const CUSTOM_PRIMARY_COLOR_LPM = '240, 144, 127'
 const CUSTOM_SECONDARY_COLOR = '210, 110, 100' // for /groups
 const FILTER_ACCENT = 'invert(65%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(313deg) brightness(120%) contrast(69%)'
 const FILTER_PRIMARY_FOR_BLACK_BASEED = 'invert(23%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(483deg) brightness(140%) contrast(70%)'
-const FILTER_BLUE_TICK = 'invert(5%) sepia(54%) hue-rotate(500deg) brightness(139%) contrast(80%) saturate(154%)'
+const FILTER_BLUE_ICON = 'invert(5%) sepia(54%) hue-rotate(500deg) brightness(139%) contrast(80%) saturate(154%)'
 
 
 
@@ -92,7 +92,17 @@ const customPage = () => {
         }
     }
 
+    if (CUSTOM_PRIMARY_COLOR) {
+
+        // Change video progress bar color
+        document.querySelectorAll('div[role="slider"] div[data-visualcompletion="ignore"]').forEach(el => {
+            if (el.hasChildNodes()) el.classList.add('custom-bg-color')
+        })
+
+    }
+
     document.querySelectorAll('div').forEach(el => {
+        const inlineStyle = el.getAttribute('style') || ''
 
         // Custom secondary color (in /groups)
         if (CUSTOM_SECONDARY_COLOR) {
@@ -101,6 +111,17 @@ const customPage = () => {
                 !secondaryAttr.toLowerCase().includes('b0b3b8')) {
                 el.style.setProperty('--secondary-text', 'rgb(var(--custom-primary))')
                 el.style.setProperty('--secondary-icon', 'rgb(var(--custom-primary))')
+            }
+        }
+
+        // Change inline css color
+        if(CUSTOM_PRIMARY_COLOR && inlineStyle.includes('color')){
+            let color = inlineStyle.match(/(?=color).+?(?=;)/g)
+            if (color) color = color.pop()
+            else color = ''
+            if(color.includes('rgb')){
+                const blue = parseFloat(color.split(',')[2])
+                if(blue > 239) el.classList.add('custom-text-color')
             }
         }
 
@@ -163,6 +184,38 @@ const customPage = () => {
 
     })
 
+    document.querySelectorAll('span').forEach(el => {
+        const inlineStyle = el.getAttribute('style') || ''
+
+        // Change inline css color
+        if (CUSTOM_PRIMARY_COLOR && inlineStyle.includes('color')) {
+            let color = inlineStyle.match(/(?=color).+?(?=;)/g)
+            if (color) color = color.pop()
+            else color = ''
+            if (color.includes('rgb')) {
+                const blue = parseFloat(color.split(',')[ 2 ])
+                if (blue > 239) el.classList.add('custom-text-color')
+            }
+        }
+
+    })
+
+    // Remove custom color when inline css is changed
+    document.querySelectorAll('.custom-text-color').forEach(el => {
+        const inlineStyle = el.getAttribute('style') || ''
+        if (!inlineStyle.includes('color')) {
+            el.classList.remove('custom-text-color')
+        }else{
+            let color = inlineStyle.match(/(?=color).+?(?=;)/g)
+            if(color) color = color.pop()
+            else color = ''
+            if (color.includes('rgb')) {
+                const blue = parseFloat(color.split(',')[ 2 ])
+                if (blue < 240) el.classList.remove('custom-text-color')
+            }
+        }
+    })
+
     // Hide left side bar
     if (REMOVE_LEFT_SIDEBAR) {
         let match = false
@@ -219,30 +272,19 @@ const customPage = () => {
             }
         }
 
-        // blue tick
-        if (FILTER_BLUE_TICK) {
-            // const list = [
-            //     {
-            //         url: '/rsrc.php/v3/yT/r/kMNnZ-qWOsv',
-            //         pos: [ '-73px -84px', '-173px -59px', '0px -187px', '-168px -166px' ]
-            //     },
-            //     {
-            //         url: '/rsrc.php/v3/ym/r/5TbF9VXKtYW',
-            //         pos: [ '-73px -84px', '-173px -59px', '0px -187px', '-168px -166px' ]
-            //     }
-            // ]
-            // list.forEach(item => {
-            //     if (src.includes(item.url)) {
-            //         item.pos.forEach(p => {
-            //             if (pos.includes(p))
-            //                 el.classList.add('blue-tick-filter')
-            //         })
-            //     }
-            // })
-            const posList = [ '-73px -84px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px' ]
+        // blue icon
+        if (FILTER_BLUE_ICON) {
+            const posList = [ 
+                // blue tick
+                '-73px -84px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px',
+                // watch icon
+                '0px -197px',
+                // liked icon
+                '0px -100px'
+            ]
             posList.forEach(p => {
                 if (pos.includes(p))
-                    el.classList.add('blue-tick-filter')
+                    el.classList.add('blue-icon-filter')
             })
         }
 
@@ -279,8 +321,8 @@ const primaryChange = () => {
     if (FILTER_PRIMARY_FOR_BLACK_BASEED) {
         setCssAttribute(`--custom-icon-filter: ${FILTER_PRIMARY_FOR_BLACK_BASEED};`)
     }
-    if (FILTER_BLUE_TICK) {
-        setCssAttribute(`--blue-tick-filter: ${FILTER_BLUE_TICK};`)
+    if (FILTER_BLUE_ICON) {
+        setCssAttribute(`--blue-icon-filter: ${FILTER_BLUE_ICON};`)
     }
 }
 
@@ -297,7 +339,7 @@ setTimeout(themeChange, 3000)
 document.addEventListener('location.change', customPage)
 window.addEventListener('scroll', customPage)
 
-setInterval(customPage, 1000);
+setInterval(customPage, 100);
 
 function run() {
 

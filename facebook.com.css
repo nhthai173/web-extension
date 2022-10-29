@@ -36,7 +36,7 @@ body.lpm{
     --custom-primary-lpm: 240, 144, 127;
     --custom-filter-accent: invert(40%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(5deg) brightness(90%) contrast(86%);
     --custom-icon-filter: ;
-    --blue-tick-filter: ;
+    --blue-icon-filter: ;
 } */
 
 :root, * {
@@ -76,11 +76,17 @@ body.lpm{
     filter: var(--custom-icon-filter)!important;
     -webkit-filter: var(--custom-icon-filter)!important;
 }
-.blue-tick-filter{
-    filter: var(--blue-tick-filter)!important;
-    -webkit-filter: var(--blue-tick-filter)!important;
+.blue-icon-filter{
+    filter: var(--blue-icon-filter)!important;
+    -webkit-filter: var(--blue-icon-filter)!important;
 }
 
+.custom-bg-color{
+    background-color: rgb(var(--custom-primary))!important;
+}
+.custom-text-color{
+    color: rgb(var(--custom-primary))!important;
+}
 
 
 
