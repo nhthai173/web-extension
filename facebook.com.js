@@ -221,23 +221,28 @@ const customPage = () => {
 
         // blue tick
         if (FILTER_BLUE_TICK) {
-            const list = [
-                {
-                    url: '/rsrc.php/v3/yT/r/kMNnZ-qWOsv',
-                    pos: [ '-73px -84px', '-173px -59px', '0px -187px', '-168px -166px' ]
-                },
-                {
-                    url: '/rsrc.php/v3/ym/r/5TbF9VXKtYW',
-                    pos: [ '-73px -84px', '-173px -59px', '0px -187px', '-168px -166px' ]
-                }
-            ]
-            list.forEach(item => {
-                if (src.includes(item.url)) {
-                    item.pos.forEach(p => {
-                        if (pos.includes(p))
-                            el.classList.add('blue-tick-filter')
-                    })
-                }
+            // const list = [
+            //     {
+            //         url: '/rsrc.php/v3/yT/r/kMNnZ-qWOsv',
+            //         pos: [ '-73px -84px', '-173px -59px', '0px -187px', '-168px -166px' ]
+            //     },
+            //     {
+            //         url: '/rsrc.php/v3/ym/r/5TbF9VXKtYW',
+            //         pos: [ '-73px -84px', '-173px -59px', '0px -187px', '-168px -166px' ]
+            //     }
+            // ]
+            // list.forEach(item => {
+            //     if (src.includes(item.url)) {
+            //         item.pos.forEach(p => {
+            //             if (pos.includes(p))
+            //                 el.classList.add('blue-tick-filter')
+            //         })
+            //     }
+            // })
+            const posList = [ '-73px -84px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px' ]
+            posList.forEach(p => {
+                if (pos.includes(p))
+                    el.classList.add('blue-tick-filter')
             })
         }
 
