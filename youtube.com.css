@@ -30,11 +30,29 @@ html[dark].lpm {
   background-color: #000 !important;
 }
 
-/*  */
+/* Rounded small video play */
 .html5-video-player.ytp-fit-cover-video.ytp-rounded-miniplayer.ytp-large-width-mode.playing-mode {
   border-radius: 16px;
 }
 
+
+/* Hide next video (right sidebar) */
+#secondary {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+
+
+
+
+
+
+
+/* Custom play progress */
 /* @-moz-document domain("youtube.com") */
 /* { */
 .html5-play-progress,
