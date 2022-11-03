@@ -241,18 +241,19 @@ const customPage = () => {
     }
 
     // Remove background image in reel
-    if (url.includes('/reel')) {
-        const main = document.querySelector('div[role="main"]')
-        if(main){
-            main.querySelectorAll('img').forEach(img => {
+    document.querySelectorAll('div[role="main"]').forEach(main => {
+        main.querySelectorAll('img').forEach(img => {
+            if (url.includes('/reel')) {
                 if (REMOVE_REEL_BACKGROUND) {
-                    img.classList.add('d-none')
+                    img.classList.add('reel-img-d-none')
                 } else if (REMOVE_REEL_BACKGROUND_IN_LPM) {
-                    img.classList.add('d-none-lpm')
+                    img.classList.add('reel-img-d-none-lpm')
                 }
-            })
-        }
-    }
+            }else{
+                img.classList.remove('reel-img-d-none', 'reel-img-d-none-lpm')
+            }
+        })
+    })
 
     // Custom icon filter
     document.querySelectorAll('i[data-visualcompletion="css-img"]').forEach(el => {

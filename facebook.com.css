@@ -28,6 +28,13 @@ body.lpm{
     color: #fff!important;
 }
 
+.reel-img-d-none{
+    display: none!important;
+}
+.lpm .reel-img-d-none-lpm{
+    display: none!important;
+}
+
 
 /* Change primary color */
 /* :root{
