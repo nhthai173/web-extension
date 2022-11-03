@@ -241,22 +241,17 @@ const customPage = () => {
     }
 
     // Remove background image in reel
-    if (REMOVE_REEL_BACKGROUND || REMOVE_REEL_BACKGROUND_IN_LPM) {
-        document.querySelectorAll('img').forEach(img => {
-            if (url.includes('/reel')) {
-                const height = parseFloat(getComputedStyle(img).height)
-                const width = parseFloat(getComputedStyle(img).width)
-                const ratio = height / width
-                const src = img.src
-                // console.log(img, height, width, !src.includes('static'))
-                if (!isNaN(ratio) && ratio !== 1 && width > height && !src.includes('static')) {
-                    img.classList.remove('d-none', 'd-none-lpm')
-                    // reelBg.src = ''
-                    if(REMOVE_REEL_BACKGROUND) img.classList.add('d-none')
-                    if(REMOVE_REEL_BACKGROUND_IN_LPM) img.classList.add('d-none-lpm')
+    if (url.includes('/reel')) {
+        const main = document.querySelector('div[role="main"]')
+        if(main){
+            main.querySelectorAll('img').forEach(img => {
+                if (REMOVE_REEL_BACKGROUND) {
+                    img.classList.add('d-none')
+                } else if (REMOVE_REEL_BACKGROUND_IN_LPM) {
+                    img.classList.add('d-none-lpm')
                 }
-            }
-        })
+            })
+        }
     }
 
     // Custom icon filter
@@ -276,7 +271,7 @@ const customPage = () => {
         if (FILTER_BLUE_ICON) {
             const posList = [ 
                 // blue tick
-                '-73px -84px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px',
+                '-73px -84px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px',
                 // watch icon
                 '0px -197px',
                 // liked icon
