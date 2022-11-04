@@ -16,7 +16,8 @@ const CUSTOM_PRIMARY_COLOR_LPM = '240, 144, 127'
 const CUSTOM_SECONDARY_COLOR = '210, 110, 100' // for /groups
 const FILTER_ACCENT = 'invert(65%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(313deg) brightness(120%) contrast(69%)'
 const FILTER_PRIMARY_FOR_BLACK_BASEED = 'invert(23%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(483deg) brightness(140%) contrast(70%)'
-const FILTER_BLUE_ICON = 'invert(5%) sepia(54%) hue-rotate(500deg) brightness(139%) contrast(80%) saturate(154%)'
+const FILTER_BLUE_ICON_LIGHT = 'invert(5%) sepia(54%) hue-rotate(500deg) brightness(139%) contrast(95%) saturate(154%)'
+const FILTER_BLUE_ICON_DARK = 'invert(5%) sepia(54%) hue-rotate(500deg) brightness(139%) contrast(76%) saturate(154%)'
 
 
 
@@ -268,14 +269,32 @@ const customPage = () => {
         }
 
         // blue icon
-        if (FILTER_BLUE_ICON) {
+        if (FILTER_BLUE_ICON_LIGHT || FILTER_BLUE_ICON_DARK) {
             const posList = [ 
                 // blue tick
                 '-47px -164px', '-73px -84px', '-101px -126px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px',
                 // watch icon
                 '0px -197px',
                 // liked icon
-                '0px -100px'
+                '0px -100px',
+                // group icon
+                '0px -986px',
+                '0px -74px',
+                // post icon
+                '0px -1479px',
+                // watch icon
+                '0px -1856px',
+                '0px -481px',
+                // shield icon
+                '0px -1624px',
+                // friends icon
+                '0px -259px',
+                // recent icon
+                '0px -407px',
+                // makert icon
+                '0px -370px',
+                // game icon
+                '0px -37px',
             ]
             posList.forEach(p => {
                 if (pos.includes(p))
@@ -316,8 +335,11 @@ const primaryChange = () => {
     if (FILTER_PRIMARY_FOR_BLACK_BASEED) {
         setCssAttribute(`--custom-icon-filter: ${FILTER_PRIMARY_FOR_BLACK_BASEED};`)
     }
-    if (FILTER_BLUE_ICON) {
-        setCssAttribute(`--blue-icon-filter: ${FILTER_BLUE_ICON};`)
+    if (FILTER_BLUE_ICON_LIGHT) {
+        setCssAttribute(`--blue-icon-filter-light: ${FILTER_BLUE_ICON_LIGHT};`)
+    }
+    if (FILTER_BLUE_ICON_DARK) {
+        setCssAttribute(`--blue-icon-filter-dark: ${FILTER_BLUE_ICON_DARK};`)
     }
 }
 

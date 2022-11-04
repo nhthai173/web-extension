@@ -36,15 +36,6 @@ body.lpm{
 }
 
 
-/* Change primary color */
-/* :root{
-    --custom-primary: 210, 110, 100;
-    --custom-primary-dark: 240, 144, 127;
-    --custom-primary-lpm: 240, 144, 127;
-    --custom-filter-accent: invert(40%) sepia(54%) saturate(200%) saturate(190%) saturate(200%) saturate(200%) hue-rotate(5deg) brightness(90%) contrast(86%);
-    --custom-icon-filter: ;
-    --blue-icon-filter: ;
-} */
 
 :root, * {
 
@@ -84,8 +75,12 @@ body.lpm{
     -webkit-filter: var(--custom-icon-filter)!important;
 }
 .blue-icon-filter{
-    filter: var(--blue-icon-filter)!important;
-    -webkit-filter: var(--blue-icon-filter)!important;
+    filter: var(--blue-icon-filter-light)!important;
+    -webkit-filter: var(--blue-icon-filter-light)!important;
+}
+.dark .blue-icon-filter{
+    filter: var(--blue-icon-filter-dark)!important;
+    -webkit-filter: var(--blue-icon-filter-dark)!important;
 }
 
 .custom-bg-color{
