@@ -58,6 +58,30 @@ function setCssAttribute(string = '', el) {
 }
 
 
+function matchBlueColorInline(el){
+    if(!el) return false
+    const style = el.getAttribute('style') || ''
+    let matchColor = style.match(/(^|;|\s)+(?=color).*?(?=;)/g)
+    if (matchColor) {
+        try{
+            matchColor = matchColor.pop()
+            matchColor = matchColor.split(':').pop()
+            let [ r, g, b ] = matchColor.split(',')
+                .map(s => {
+                    const matchNum = s.match(/\d+/g)
+                    if (matchNum) return parseInt(matchNum[ 0 ])
+                    return 0
+                })
+            if (r !== g && g !== b && r !== b) {
+                const max = Math.max(r, g, b)
+                if (max && max === b) return true
+            }
+        }catch(e){}
+    }
+    return false
+}
+
+
 // Event occurs when the theme changes
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
     themeChange()
@@ -102,8 +126,7 @@ const customPage = () => {
     }
 
     document.querySelectorAll('div').forEach(el => {
-        const inlineStyle = el.getAttribute('style') || ''
-
+        
         // Custom secondary color (in /groups)
         if (CUSTOM_SECONDARY_COLOR) {
             const secondaryAttr = getComputedStyle(el).getPropertyValue('--secondary-text')
@@ -115,14 +138,8 @@ const customPage = () => {
         }
 
         // Change inline css color
-        if(CUSTOM_PRIMARY_COLOR && inlineStyle.includes('color')){
-            let color = inlineStyle.match(/(?=color).+?(?=;)/g)
-            if (color) color = color.pop()
-            else color = ''
-            if(color.includes('rgb')){
-                const blue = parseFloat(color.split(',')[2])
-                if(blue > 239) el.classList.add('custom-text-color')
-            }
+        if(CUSTOM_PRIMARY_COLOR && matchBlueColorInline(el)){
+            el.classList.add('custom-text-color')
         }
 
         // Remove post background
@@ -185,34 +202,16 @@ const customPage = () => {
     })
 
     document.querySelectorAll('span').forEach(el => {
-        const inlineStyle = el.getAttribute('style') || ''
-
         // Change inline css color
-        if (CUSTOM_PRIMARY_COLOR && inlineStyle.includes('color')) {
-            let color = inlineStyle.match(/(?=color).+?(?=;)/g)
-            if (color) color = color.pop()
-            else color = ''
-            if (color.includes('rgb')) {
-                const blue = parseFloat(color.split(',')[ 2 ])
-                if (blue > 239) el.classList.add('custom-text-color')
-            }
+        if (CUSTOM_PRIMARY_COLOR && matchBlueColorInline(el)) {
+            el.classList.add('custom-text-color')
         }
-
     })
 
     // Remove custom color when inline css is changed
     document.querySelectorAll('.custom-text-color').forEach(el => {
-        const inlineStyle = el.getAttribute('style') || ''
-        if (!inlineStyle.includes('color')) {
+        if (!matchBlueColorInline(el)) {
             el.classList.remove('custom-text-color')
-        }else{
-            let color = inlineStyle.match(/(?=color).+?(?=;)/g)
-            if(color) color = color.pop()
-            else color = ''
-            if (color.includes('rgb')) {
-                const blue = parseFloat(color.split(',')[ 2 ])
-                if (blue < 240) el.classList.remove('custom-text-color')
-            }
         }
     })
 
@@ -272,7 +271,7 @@ const customPage = () => {
         if (FILTER_BLUE_ICON) {
             const posList = [ 
                 // blue tick
-                '-73px -84px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px',
+                '-47px -164px', '-73px -84px', '-101px -126px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px',
                 // watch icon
                 '0px -197px',
                 // liked icon
