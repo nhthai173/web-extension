@@ -275,6 +275,8 @@ const customPage = () => {
                 '-47px -164px', '-73px -84px', '-101px -126px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px',
                 // watch icon
                 '0px -197px',
+                '0px -1856px',
+                '0px -481px',
                 // liked icon
                 '0px -100px',
                 // group icon
@@ -282,13 +284,11 @@ const customPage = () => {
                 '0px -74px',
                 // post icon
                 '0px -1479px',
-                // watch icon
-                '0px -1856px',
-                '0px -481px',
                 // shield icon
                 '0px -1624px',
                 // friends icon
                 '0px -259px',
+                '0px -899px',
                 // recent icon
                 '0px -407px',
                 // makert icon
