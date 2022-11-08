@@ -121,7 +121,14 @@ const customPage = () => {
 
         // Change video progress bar color
         document.querySelectorAll('div[role="slider"] div[data-visualcompletion="ignore"]').forEach(el => {
-            if (el.hasChildNodes()) el.classList.add('custom-bg-color')
+            if (el.hasChildNodes()){
+                // el.classList.add('custom-bg-color')
+                el.classList.add('nyan-cat-progress')
+                const div = el.querySelector('div')
+                if (div) {
+                    div.classList.add('nyan-cat', 'fb-nyan-cat')
+                }
+            }
         })
 
     }
@@ -272,7 +279,7 @@ const customPage = () => {
         if (FILTER_BLUE_ICON_LIGHT || FILTER_BLUE_ICON_DARK) {
             const posList = [ 
                 // blue tick
-                '-47px -164px', '-73px -84px', '-101px -126px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px',
+                '-47px -164px', '-51px -164px', '-73px -84px', '-101px -126px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px',
                 // watch icon
                 '0px -197px',
                 '0px -1856px',
@@ -284,6 +291,7 @@ const customPage = () => {
                 '0px -74px',
                 // post icon
                 '0px -1479px',
+                '0px -1711px',
                 // shield icon
                 '0px -1624px',
                 // friends icon
