@@ -119,15 +119,20 @@ const customPage = () => {
 
     if (CUSTOM_PRIMARY_COLOR) {
 
-        // Change video progress bar color
+        // Change video progress bar
         document.querySelectorAll('div[role="slider"] div[data-visualcompletion="ignore"]').forEach(el => {
+            // prorgress
             if (el.hasChildNodes()){
-                // el.classList.add('custom-bg-color')
                 el.classList.add('nyan-cat-progress')
+                // thumb
                 const div = el.querySelector('div')
                 if (div) {
                     div.classList.add('nyan-cat', 'fb-nyan-cat')
                 }
+            }
+            // load
+            else{
+                el.classList.add('nyan-cat-load')
             }
         })
 
