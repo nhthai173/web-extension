@@ -599,7 +599,7 @@ document.addEventListener('nhtcss.buttonInit', e => {
 })
 
 // Import Flaticon
-document.dispatchEvent(new Event('import.flaticon'))
+// document.dispatchEvent(new Event('import.flaticon'))
 
 // Init called via event
 document.addEventListener('nhtcss.init', init)

@@ -207,7 +207,7 @@ const customPage = () => {
                 const role = el.getAttribute('role')
                 if (role) {
                     if (role === 'complementary')
-                        el.classList.add('d-none')
+                        el.classList.add('d-none-important')
                 }
             }
         }
@@ -247,7 +247,7 @@ const customPage = () => {
         if(match){
             const navs = document.querySelectorAll('div[role="navigation"]')
             if (navs.length && navs[ 2 ]) {
-                navs[ 2 ].classList.add('d-none')
+                navs[ 2 ].classList.add('d-none-important')
             }
         }
     }

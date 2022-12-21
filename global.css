@@ -374,7 +374,7 @@
   justify-content: center;
   align-items: center;
 }
-.d-none {
+.d-none-important {
   display: none !important;
 }
 .lpm .d-none-lpm {
