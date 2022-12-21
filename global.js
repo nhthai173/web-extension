@@ -28,6 +28,28 @@ function copyCB(text) {
     navigator.clipboard.writeText(text)
 }
 
+function matchWithDarkReaderTheme() {
+    const $html = document.getElementsByTagName('html')[ 0 ]
+    function _isDark() {
+        const theme = $html.getAttribute('data-darkreader-scheme')
+        return theme === 'dark' ? true : false
+    }
+    function themeChange() {
+        if(_isDark()){
+            document.body.classList.add('dark')
+        } else {
+            document.body.classList.remove('dark')
+        }
+    }
+    new MutationObserver((mutations, observer) => {
+        mutations.forEach(mutation => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-darkreader-scheme') {
+                themeChange()
+            }
+        })
+    }).observe($html, { attributes: true })
+    themeChange()
+}
 
 // function Input(el) {
 //     var parent = el,
@@ -135,16 +157,16 @@ INIT_FUNCTIONS.fluent = () => {
 
 INIT_FUNCTIONS.btnCopy = () => {
     document.querySelectorAll('.nht_btn-copy').forEach(btn => {
-        btn.addEventListener('click', async(e) => {
+        btn.addEventListener('click', async (e) => {
             const data = btn.getAttribute('data-copy')
             const type = btn.getAttribute('data-type')
-            if (data && data != 'null'){
-                if(type == 'file'){
+            if (data && data != 'null') {
+                if (type == 'file') {
                     const blob = await fetch(data).then(res => res.blob())
-                    if(blob.type.includes('image')){
+                    if (blob.type.includes('image')) {
                         // png type
                         if (blob.type.includes('png')) {
-                            navigator.clipboard.write([new ClipboardItem({[blob.type]: blob})])
+                            navigator.clipboard.write([ new ClipboardItem({ [ blob.type ]: blob }) ])
                         }
                         // other type 
                         else {
@@ -163,11 +185,11 @@ INIT_FUNCTIONS.btnCopy = () => {
                                 img.src = URL.createObjectURL(blob)
                             }
                             setCanvasImage(blob, (pngBlob) => {
-                                navigator.clipboard.write([new ClipboardItem({ 'image/png': pngBlob })])
+                                navigator.clipboard.write([ new ClipboardItem({ 'image/png': pngBlob }) ])
                             })
                         }
                     }
-                }else{
+                } else {
                     copyCB(data)
                 }
             }
@@ -180,7 +202,7 @@ INIT_FUNCTIONS.btnDownload = () => {
     document.querySelectorAll('.nht_btn-download').forEach(async (btn) => {
         const url = btn.getAttribute('data-url')
         let name = btn.getAttribute('data-name')
-        if(url){
+        if (url) {
             if (!name) name = url.split('/').pop()
             btn.addEventListener('click', async (e) => {
                 const blob = await fetch(url).then(res => res.blob())
@@ -198,12 +220,12 @@ INIT_FUNCTIONS.btnDownload = () => {
 
 INIT_FUNCTIONS.nhticon = () => {
     const els = document.querySelectorAll('.nht_icon')
-    if(els.length){
+    if (els.length) {
         els.forEach(el => {
             const elClass = el.className
-            for(const i in ICONS){
-                if(elClass.includes(i)){
-                    el.innerHTML = ICONS[i]
+            for (const i in ICONS) {
+                if (elClass.includes(i)) {
+                    el.innerHTML = ICONS[ i ]
                 }
             }
         })
@@ -451,17 +473,17 @@ const nhtcss_init = (appendType, appendEl) => {
             </div>`
         // <div class="close"><span>&times;</span></div>
         let element = null
-        if(appendType && appendEl){
+        if (appendType && appendEl) {
             const $appendEl = document.querySelector(appendEl)
-            if(
+            if (
                 appendType === 'appendChild' ||
-                appendType === 'prepend' || 
+                appendType === 'prepend' ||
                 appendType === 'after' ||
-                appendType === 'before'){
-                element = $appendEl[appendType]($nhtcss)
+                appendType === 'before') {
+                element = $appendEl[ appendType ]($nhtcss)
             }
             element = element.querySelector('.nhtcss-btn-wrapper')
-        }else{
+        } else {
             element = document.body.appendChild($nhtcss).querySelector('.nhtcss-btn-wrapper')
         }
         let cPos = localStorage.getItem('nhtcssBtnPos')
@@ -485,7 +507,7 @@ const nhtcss_init = (appendType, appendEl) => {
     }
 
     let KeyMap = {}
-    
+
     const nhtcss_init = () => {
 
         nhtcss.addEventListener("mousedown", mouseDown);
@@ -547,7 +569,7 @@ const nhtcss_init = (appendType, appendEl) => {
                 document.dispatchEvent(new Event('nhtcss.modal.compress'))
             }
         })
-    
+
         return {
             nhtcss,
             Modal,
@@ -606,12 +628,15 @@ document.addEventListener('nhtcss.init', init)
 
 // Check location change
 let CURRENT_LOCATION = window.location.href
-setInterval(()=>{
+setInterval(() => {
     if (CURRENT_LOCATION != window.location.href) {
         CURRENT_LOCATION = window.location.href
         document.dispatchEvent(new Event('location.change'))
     }
 }, 500)
+
+// Match theme with darkreader
+document.addEventListener('nhtcss.matchWithDarkReader', matchWithDarkReaderTheme)
 
 
 /* ============ nhtcss EVENT ============ */
