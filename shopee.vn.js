@@ -282,8 +282,9 @@ function queryRatingMedia(){
 
 
 
-
-document.dispatchEvent(new CustomEvent('nhtcss.buttonInit'))
+document.dispatchEvent(new CustomEvent('nhtcss.matchWithDarkReader'));
+document.dispatchEvent(new CustomEvent('nhtcss.buttonInit'));
+document.dispatchEvent(new Event('import.flaticon'))
 
 let IMAGES = []
 let VIDEOS = []
@@ -322,7 +323,7 @@ document.addEventListener('nhtcss.click', e => {
     }, 100);
 })
 
-// Auto play video in popup
+// Auto play video when scroll in popup
 document.querySelector('.nht_modal-content').addEventListener('scroll', e => {
     const currPos = e.target.scrollTop
     e.target.querySelectorAll('video').forEach(video => {
@@ -333,6 +334,16 @@ document.querySelector('.nht_modal-content').addEventListener('scroll', e => {
             video.pause()
         }
     })
+})
+
+// Auto play video when show
+document.addEventListener('nhtcss.modal.show', e => {
+    document.querySelector('.nht_modal-content').dispatchEvent(new Event('scroll'))
+})
+
+// Pause all video in popup when hide
+document.addEventListener('nhtcss.modal.hide', e => {
+    $nhtModal.querySelectorAll('video').forEach(video => video.pause())
 })
 
 
