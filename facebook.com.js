@@ -285,12 +285,14 @@ const customPage = () => {
             const posList = [ 
                 // blue tick
                 '-47px -164px', '-51px -164px', '-73px -84px', '-101px -126px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px', '-149px -147px', '-59px -126px', 
-                '-176px -59px', '-42px -126px',
+                '-176px -59px', '-42px -126px', '0px -164px',
                 // watch icon
                 '0px -197px',
                 '0px -1856px',
                 '0px -1885px',
                 '0px -481px',
+                // Video icon
+                '0px -1102px',
                 // liked icon
                 '0px -100px',
                 // group icon
@@ -312,6 +314,8 @@ const customPage = () => {
                 '0px -370px',
                 // game icon
                 '0px -37px',
+                // Messenger icon
+                '0px -145px'
             ]
             posList.forEach(p => {
                 if (pos.includes(p))

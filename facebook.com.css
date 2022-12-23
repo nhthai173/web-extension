@@ -51,6 +51,7 @@ body.lpm{
     --progress-ring-blue-foreground: rgb(var(--custom-primary));
     --toggle-active-background: rgb(var(--custom-primary));
     /* --toggle-button-active-background: #E6F2FF; */
+    --switch-active: rgb(var(--custom-primary));
 
     --filter-accent: var(--custom-filter-accent);
     /* --filter-blue-link-icon: invert(73%) sepia(29%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(103.25%) hue-rotate(189deg) brightness(101%) contrast(101%); */
