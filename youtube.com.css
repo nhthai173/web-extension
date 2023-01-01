@@ -37,13 +37,13 @@ html[dark].lpm {
 
 
 /* Hide next video (right sidebar) */
-#secondary {
+/* #secondary {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
-}
+} */
 
 
 
