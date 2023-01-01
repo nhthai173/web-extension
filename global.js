@@ -349,6 +349,13 @@ const nhtcss_init = (appendType, appendEl) => {
         }, timeout);
     }
 
+    const discard = (e) => {
+        if (e.keyCode == 27) {
+            nhtcss.dispatchEvent(new Event("mouseup"))
+        }
+        return
+    }
+
     const move = (e) => {
         if (!nhtcss.classList.contains("nht-active")) {
             let x, y
@@ -382,6 +389,7 @@ const nhtcss_init = (appendType, appendEl) => {
         } else {
             window.addEventListener("touchmove", move);
         }
+        window.addEventListener("keyup", discard);
         nhtcss.style.transition = "none";
         Modal.style.transition = "none";
     };
@@ -392,6 +400,7 @@ const nhtcss_init = (appendType, appendEl) => {
         } else {
             window.removeEventListener("touchmove", move);
         }
+        window.removeEventListener("keyup", discard);
         snapToSide();
         nhtcss.style.transition = "0.3s ease-in-out left";
         Modal.style.transition = "all 0.2s ease-in-out";
@@ -539,7 +548,7 @@ const nhtcss_init = (appendType, appendEl) => {
             snapToSide();
         })
 
-        document.body.addEventListener('keydown', (e) => {
+        window.addEventListener('keydown', (e) => {
             KeyMap[ e.key ] = true
             if (KeyMap[ 'Escape' ] === true) {
                 Modal.classList.remove('show')
@@ -549,7 +558,7 @@ const nhtcss_init = (appendType, appendEl) => {
             }
         })
 
-        document.body.addEventListener('keyup', (e) => {
+        window.addEventListener('keyup', (e) => {
             KeyMap[ e.key ] = false
         })
 
@@ -618,7 +627,21 @@ document.addEventListener('nhtcss.buttonInit', e => {
     } else {
         nhtcss_init()
     }
+    if (e.mini) {
+        document.querySelector('.nhtcss-btn-wrapper').classList.add('mini')
+        document.querySelector('.nht_modal').classList.add('mini')
+    }
 })
+document.addEventListener('nhtcss.buttonMiniInit', e => {
+    if (e.detail && e.detail.appendType && e.detail.appendEl) {
+        nhtcss_init(e.detail.appendType, e.detail.appendEl)
+    } else {
+        nhtcss_init()
+    }
+    document.querySelector('.nhtcss-btn-wrapper').classList.add('mini')
+    document.querySelector('.nht_modal').classList.add('mini')
+})
+
 
 // Import Flaticon
 // document.dispatchEvent(new Event('import.flaticon'))

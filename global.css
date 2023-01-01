@@ -30,6 +30,11 @@
   /* overflow: hidden; */
   z-index: 9999999999999999999999999;
 }
+.nhtcss-btn-wrapper.mini {
+  width: 25px;
+  height: 25px;
+  transform: translate(20px, 0);
+}
 .nhtcss-btn-wrapper .nhtcss-btn {
   position: absolute;
   top: 0;
@@ -67,6 +72,9 @@
   background-color: rgba(107, 38, 187, 1);
   transition: all 0.2s ease-in-out;
   /* overflow: auto; */
+}
+.nht_modal.mini {
+  transform: translate(50px, 0);
 }
 .fluent .nht_modal,
 .fluent.nht_modal {
@@ -226,54 +234,55 @@
 }
 
 /* Common */
-.mb-15 {
+.mb-15-px {
   margin-bottom: 15px !important;
 }
-.mb-8 {
+.mb-8-px {
   margin-bottom: 8px !important;
 }
-.mb-4 {
+.mb-4-px {
   margin-bottom: 4px !important;
 }
-.mb-0 {
+.mb-0-px {
   margin-bottom: 0 !important;
 }
-.mt-15 {
+.mt-15-px {
   margin-top: 15px !important;
 }
-.mt-8 {
+.mt-8-px {
   margin-top: 8px !important;
 }
-.mt-4 {
+.mt-4-px {
   margin-top: 4px !important;
 }
-.mt-0 {
+.mt-0-px {
   margin-top: 0 !important;
 }
-.ms-15 {
+.ms-15-px {
   margin-left: 15px !important;
 }
-.ms-8 {
+.ms-8-px {
   margin-left: 8px !important;
 }
-.ms-4 {
+.ms-4-px {
   margin-left: 4px !important;
 }
-.ms-0 {
+.ms-0-px {
   margin-left: 0 !important;
 }
-.me-15 {
+.me-15-px {
   margin-right: 15px !important;
 }
-.me-8 {
+.me-8-px {
   margin-right: 8px !important;
 }
-.me-4 {
+.me-4-px {
   margin-right: 4px !important;
 }
-.me-0 {
+.me-0-px {
   margin-right: 0 !important;
 }
+.m-0-px,
 .m-0 {
   margin: 0 !important;
 }
@@ -398,15 +407,15 @@
   display: none !important;
 }
 
-.rounded {
+.nht-rounded {
   border-radius: 50%;
 }
 
-.rounded-pill {
+.nht-rounded-pill {
   border-radius: 9999px;
 }
 
-.rounded-center {
+.nht-rounded-center {
   border-radius: 50%;
   display: flex;
   justify-content: center;
