@@ -1,0 +1,4 @@
+.od-PdfViewer-container .canvasWrapper canvas {
+    /* filter: grayscale(1) invert(1) hue-rotate(180deg); */
+    filter: grayscale(1) invert(1) sepia(1) saturate(0);
+}
