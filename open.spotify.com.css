@@ -1,0 +1,30 @@
+.playback-bar div[data-testid="progress-bar-background"] > div > div {
+  background: var(--nyan-cat-progress-bg-image);
+  background: linear-gradient(
+    to bottom,
+    var(--nyan-cat-progress-color)
+  ) !important;
+}
+
+.playback-bar div[data-testid="progress-bar-background"] > div:nth-child(1) {
+  background: var(--nyan-cat-load-image) !important;
+}
+
+.playback-bar div[data-testid="progress-bar-background"] > div:nth-child(2) {
+  --normal-scale: 0.7;
+  --hover-scale: 1;
+  border: none !important;
+  border-radius: 0 !important;
+  background: var(--nyan-cat-image) !important;
+  width: 34px !important;
+  height: 21px !important;
+  transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
+  -webkit-transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
+  -moz-transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
+}
+.playback-bar div[data-testid="progress-bar-background"] > div:nth-child(2):hover {
+  transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
+  -webkit-transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
+  -moz-transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
+  transition: .1s ease-in-out;
+}
