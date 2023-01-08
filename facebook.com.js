@@ -285,7 +285,7 @@ const customPage = () => {
             const posList = [ 
                 // blue tick
                 '-47px -164px', '-51px -164px', '-73px -84px', '-101px -126px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px', '-149px -147px', '-59px -126px', 
-                '-176px -59px', '-42px -126px', '0px -164px', '-170px -147px', '-136px -147px',
+                '-176px -59px', '-42px -126px', '0px -164px', '-170px -147px', '-136px -147px', '-166px -147px', '-80px -126px',
                 // watch icon
                 '0px -197px',
                 '0px -1856px',
