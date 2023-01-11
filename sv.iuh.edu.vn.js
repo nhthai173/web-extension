@@ -1,3 +1,10 @@
+const findSurvey = () => {
+    if (!window.location.href.match(/\/sinh-vien\/khao-sat/)) return
+    const a = document.querySelector('a[href*="/sinh-vien/chi-tiet-phieu-khao-sat"]')
+    if (!a) return
+    a.dispatchEvent(new PointerEvent('click', { bubbles: true }))
+}
+
 const autoCompleteForm = () => {
     let anySuccess = false
     try {
@@ -18,6 +25,9 @@ const autoCompleteForm = () => {
     } catch (e) { }
 }
 
-
-document.addEventListener('location.change', autoCompleteForm)
-setTimeout(autoCompleteForm, 2000);
+const main = () => {
+    setTimeout(findSurvey, 2000);
+    setTimeout(autoCompleteForm, 4000);
+}
+main();
+document.addEventListener('location.change', main);
