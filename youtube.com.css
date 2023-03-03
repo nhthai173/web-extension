@@ -56,7 +56,8 @@ html[dark].lpm {
 /* @-moz-document domain("youtube.com") */
 /* { */
 .html5-play-progress,
-.ytp-play-progress {
+.ytp-play-progress,
+.ytd-progress-bar-line.progress-bar-played {
   background: var(--nyan-cat-progress-bg-image);
   /* background: -moz-linear-gradient(
     top, var(--nyan-cat-progress-color)) !important;
@@ -67,7 +68,8 @@ html[dark].lpm {
 }
 
 .html5-load-progress,
-.ytp-load-progress {
+.ytp-load-progress,
+.ytd-progress-bar-line[role="progressbar"] {
   background: var(--nyan-cat-load-image) !important;
 }
 
