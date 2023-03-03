@@ -1,0 +1,39 @@
+.super-banner--mcq,
+.signup-banner {
+    display: none!important;
+}
+
+.clear-view-button {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 200px;
+    font-size: 20px;
+    top: 78px;
+    right: 10px;
+    padding: 0;
+    z-index: 9999999999;
+}
+.clear-view-button svg {
+    height: 28px;
+    margin: 4px 2px 0 0;
+    fill: #fff;
+}
+
+[nht-clear-view] .sidebar-container-mcq,
+[nht-clear-view] .top-header,
+[nht-clear-view] .mcq-breadcrumbs,
+[nht-clear-view] .sub-footer,
+[nht-clear-view] .primary-footer {
+    display: none!important;
+}
+
+[nht-clear-view] .container.ques-container {
+    width: 100%!important;
+}
+
+@media print {
+    .clear-view-button {
+        display: none!important;
+    }
+}
