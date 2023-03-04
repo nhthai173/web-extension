@@ -5,6 +5,11 @@ if(isDark){
     $html.classList.add('lpm')
 }
 
+document.dispatchEvent(new CustomEvent('nhtcss.cmdK', {
+    detail: { el: 'input#search' }
+}))
+
+
 function run(params) {
     
 }
