@@ -35,7 +35,7 @@ function matchWithDarkReaderTheme() {
         return theme === 'dark' ? true : false
     }
     function themeChange() {
-        if(_isDark()){
+        if (_isDark()) {
             document.body.classList.add('dark')
         } else {
             document.body.classList.remove('dark')
@@ -660,6 +660,21 @@ setInterval(() => {
 
 // Match theme with darkreader
 document.addEventListener('nhtcss.matchWithDarkReader', matchWithDarkReaderTheme)
+
+// Custom cmd + K
+document.addEventListener('nhtcss.cmdK', (e) => {
+    if (!e.detail) return
+    const { el, callback } = e.detail
+    if (!el) return
+    document.addEventListener('keydown', (e) => {
+        const $el = document.querySelector(el)
+        if (!$el) return
+        if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
+            $el.focus()
+            if (callback) callback()
+        }
+    })
+})
 
 
 /* ============ nhtcss EVENT ============ */
