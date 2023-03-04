@@ -285,6 +285,9 @@ function queryRatingMedia(){
 document.dispatchEvent(new CustomEvent('nhtcss.matchWithDarkReader'));
 document.dispatchEvent(new CustomEvent('nhtcss.buttonInit'));
 document.dispatchEvent(new Event('import.flaticon'))
+document.dispatchEvent(new CustomEvent('nhtcss.cmdK', {
+    detail: { el: 'input.shopee-searchbar-input__input' }
+}))
 
 let IMAGES = []
 let VIDEOS = []
