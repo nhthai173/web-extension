@@ -1,6 +1,6 @@
 // Configurations
 // Next: Able to change in UI
-const USE_LOW_POWER_MODE = true
+const USE_LOW_POWER_MODE = false
 const REMOVE_LEFT_SIDEBAR = true
 const REMOVE_LEFT_SIDEBAR_PATH = [ '/' ]
 const REMOVE_RIGHT_SIDEBAR = true
@@ -381,6 +381,10 @@ setTimeout(themeChange, 3000)
 
 document.addEventListener('location.change', customPage)
 window.addEventListener('scroll', customPage)
+document.dispatchEvent(new CustomEvent('nhtcss.cmdK', {
+    detail: { el: 'input[dir="ltr"][role="combobox"]' }
+}))
+
 
 setInterval(customPage, 100);
 
