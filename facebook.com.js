@@ -291,15 +291,18 @@ const customPage = () => {
                 '0px -1856px',
                 '0px -1885px',
                 '0px -481px',
+                '0px -2059px',
                 // Video icon
                 '0px -1102px',
                 '0px -1943px',
+                '0px -1189px',
                 // liked icon
                 '0px -100px',
                 // group icon
                 '0px -986px',
                 '0px -74px',
                 '0px -1015px',
+                '0px -1044px',
                 // post icon
                 '0px -1479px',
                 '0px -1711px',
@@ -308,6 +311,7 @@ const customPage = () => {
                 // shield icon
                 '0px -1624px',
                 '0px -1653px',
+                '0px -1798px',
                 // friends icon
                 '0px -259px',
                 '0px -899px',
