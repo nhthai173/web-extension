@@ -284,53 +284,37 @@ const customPage = () => {
         if (FILTER_BLUE_ICON_LIGHT || FILTER_BLUE_ICON_DARK) {
             const posList = [ 
                 // blue tick
-                '-47px -164px', '-51px -164px', '-73px -84px', '-101px -126px', '-173px -59px', '0px -187px', '-147px -166px', '-168px -166px', '-34px -164px', '-84px -126px', '-149px -147px', '-59px -126px', 
-                '-176px -59px', '-42px -126px', '0px -164px', '-170px -147px', '-136px -147px', '-166px -147px', '-80px -126px', '-174px -126px', '-21px -126px',
                 '-47px -143px', '-168px -105px',
+                '-34px -143px', '-172px -59px',
                 // watch icon
-                '0px -197px',
-                '0px -1856px',
-                '0px -1885px',
-                '0px -481px',
                 '0px -2059px',
                 // Video icon
-                '0px -1102px',
-                '0px -1943px',
                 '0px -1189px',
-                // reel icon
+                // story icon
                 '0px -1914px',
-                // Add reel icon
+                // Add story icon
                 '0px -175px',
                 // liked icon
                 '0px -100px',
                 // group icon
-                '0px -986px',
-                '0px -74px',
-                '0px -1015px',
                 '0px -1044px',
                 // post icon
-                '0px -1479px',
-                '0px -1711px',
-                '0px -1508px',
                 '0px -1566px',
-                // shield icon
-                '0px -1624px',
                 '0px -1653px',
+                // shield icon
                 '0px -1798px',
                 // friends icon
-                '0px -259px',
-                '0px -899px',
                 '0px -957px',
                 // recent icon
-                '0px -407px',
+                // '0px -407px',
                 // makert icon
-                '0px -370px',
+                // '0px -370px',
                 // game icon
-                '0px -37px',
+                // '0px -37px',
                 // Messenger icon
-                '0px -145px',
+                // '0px -145px',
                 // People tag icon
-                '0px -75px',
+                // '0px -75px',
             ]
             posList.forEach(p => {
                 if (pos.includes(p))
