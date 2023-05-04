@@ -1,3 +1,24 @@
+// Set to local storage
+function setLocalStorage(key, value) {
+    if (typeof value === 'object') {
+        value = JSON.stringify(value)
+    }
+    window.localStorage.setItem(key, value)
+}
+
+// Get from local storage
+function getLocalStorage(key) {
+    const value = window.localStorage.getItem(key)
+    try {
+        return JSON.parse(value)
+    } catch (e) { }
+    return value
+}
+
+
+
+
+
 // Configurations
 // Next: Able to change in UI
 const USE_LOW_POWER_MODE = false
@@ -286,6 +307,7 @@ const customPage = () => {
                 // blue tick
                 '-47px -143px', '-168px -105px',
                 '-34px -143px', '-172px -59px',
+                '-81px -143px', '0px -126px', '-68px -143px', '-64px -143px',
                 // watch icon
                 '0px -2059px',
                 // Video icon
@@ -364,6 +386,68 @@ const primaryChange = () => {
 }
 
 
+const appendConfigDialog = () => {
+    const _append = () => {
+        const options = [
+            {
+                name: 'Low power mode',
+                id: 'USE_LOW_POWER_MODE',
+                values: [{name: 'On', value: 'true'}, {name: 'Off', value: 'false'}]
+            },
+            {
+                name: 'Remove left sidebar',
+                id: 'REMOVE_LEFT_SIDEBAR',
+                values: [{name: 'True', value: 'true'}, {name: 'False', value: 'false'}]
+            },
+            {
+                name: 'Remove right sidebar',
+                id: 'REMOVE_RIGHT_SIDEBAR',
+                values: [{name: 'True', value: 'true'}, {name: 'False', value: 'false'}]
+            }
+        ]
+        const $options = options.map(opt => {
+            const vals = opt.values.map(val => `<option value="${val.value}">${val.name}</option>`)
+            return `<div class="nhtcss-form-item">
+                <label>${opt.name}</label>
+                <div class="select">
+                    <select name="${opt.id}">
+                        ${vals.join('\n')}
+                    </select>
+                    <!-- <i class="arrow"></i> -->
+                </div>
+            </div>`
+        })
+        const dialog = document.createElement('div')
+        dialog.className = 'nhtcss-modal-container'
+        dialog.innerHTML = `<div class="nhtcss-modal">
+            <div class="nhtcss-modal-body">
+                <div class="nhtcss-modal-close">
+                    <svg fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em"><path d="M18.707 5.293a1 1 0 0 0-1.414 0L12 10.586 6.707 5.293a1 1 0 0 0-1.414 1.414L10.586 12l-5.293 5.293a1 1 0 1 0 1.414 1.414L12 13.414l5.293 5.293a1 1 0 0 0 1.414-1.414L13.414 12l5.293-5.293a1 1 0 0 0 0-1.414z"></path></svg>
+                </div>
+                <div style="margin-top: 35px;"></div>
+                ${$options.join('\n')}
+            </div>
+        </div>`
+        document.body.prepend(dialog)
+        document.querySelector('.nhtcss-modal-close').addEventListener('click', () => {
+            dialog.remove()
+        })
+    }
+
+    try {
+        const isAppended = document.querySelectorAll('div[role=banner] div[role=dialog] div[role=list] [nhtcssBtn]').length
+        if (isAppended) return
+        let settingButton = document.querySelectorAll('div[role=banner] div[role=dialog] div[role=list] div[role=listitem]')[ 2 ]
+        if (!settingButton) return
+        const $dialogBtn = settingButton.cloneNode(true)
+        $dialogBtn.querySelector('span[dir=auto]').innerText = 'NHTCSS'
+        $dialogBtn.setAttribute('nhtcssBtn', 'true')
+        $dialogBtn.addEventListener('click', () => {
+            _append()
+        })
+        settingButton.after($dialogBtn)
+    } catch (e) { console.error('appendConfigDialog', e) }
+}
 
 
 /* MAIN CODE */
@@ -380,7 +464,11 @@ document.dispatchEvent(new CustomEvent('nhtcss.cmdK', {
 }))
 
 
-setInterval(customPage, 100);
+// setInterval(customPage, 100);
+setInterval(() => {
+    customPage()
+    appendConfigDialog()    
+}, 100);
 
 function run() {
 
