@@ -28,10 +28,12 @@ function getShopeeShortURLHTML() {
 function parseImgUrl(bgUrl = '') {
     if (!bgUrl)
         return
-    if (bgUrl.indexOf('cf.shopee') === -1)
+    if (!bgUrl.includes('url('))
         return
-    if (bgUrl.indexOf('data:image') !== -1)
-        return
+    // if (bgUrl.indexOf('cf.shopee') === -1)
+    //     return
+    // if (bgUrl.indexOf('data:image') !== -1)
+    //     return
     return bgUrl.replace(/^url\((['"]?)(.*)\1\)$/, '$2').replace(/_+\w+/, '')
 }
 
@@ -224,10 +226,8 @@ function queryProductMedia(){
     }
     // Image
     else if(divs.length){
-        for (const i in divs) {
-            const div = divs[ i ]
-            if(typeof div !== 'object') continue
-            const bgImg = getComputedStyle(div).backgroundImage
+        for (const div of divs) {
+            const bgImg = getComputedStyle(div).getPropertyValue('background-image')
             if (bgImg && bgImg != 'none') {
                 const imgURL = parseImgUrl(bgImg)
                 if (imgURL) {
