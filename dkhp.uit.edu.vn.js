@@ -1,14 +1,12 @@
 var monDangKy = `
-CE005.O11.MTCL
-CE224.O11.MTCL.1
-DS102.O12.CNCL.1
+
 `;
 
 setTimeout(() => {
 
     DangKy(monDangKy);
 
-}, 1000);
+}, 2500);
 
 
 
@@ -19,7 +17,7 @@ setTimeout(() => {
 function errorLog(msg) {
     if (!msg) msg = 'Không tìm thấy danh sách lớp học phần! Bạn tự chọn lớp đi nhé!'
     console.error(msg)
-    alert(msg)
+    // alert(msg)
 }
 
 function DangKy(monDangKyString) {
@@ -42,6 +40,10 @@ function DangKy(monDangKyString) {
             $input.checked = true
             $input.dispatchEvent(new Event('click', { bubbles: true }))
         })
+        const $submitBtn = document.querySelector('.detailBar .chakra-stack button.chakra-button')
+        if (!$submitBtn)
+            return errorLog()
+        $submitBtn.dispatchEvent(new Event('click', { bubbles: true }))
     } catch (e) {
         console.error(e)
         errorLog()
