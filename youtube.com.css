@@ -35,6 +35,11 @@ html[dark].lpm {
   border-radius: 16px;
 }
 
+yt-icon#logo-icon svg.external-icon svg > g:last-child,
+span#country-code {
+  display: none!important;
+}
+
 
 /* Hide next video (right sidebar) */
 /* #secondary {
