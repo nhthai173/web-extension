@@ -235,6 +235,16 @@ INIT_FUNCTIONS.nhticon = () => {
 
 
 
+INIT_FUNCTIONS.nhtForm = () => {
+    document.querySelectorAll('.nht_form-label .prefix').forEach(el => {
+        const w = window.getComputedStyle(el).width.replace(/px|em|rem/g, '')
+        el.parentNode.querySelector('input').style.paddingLeft = 10 + w * 1 + 'px'
+    })
+}
+
+
+
+
 
 /* ============ IMPORT LIBRARY ============ */
 document.addEventListener('import.flaticon', () => {
@@ -641,6 +651,9 @@ document.addEventListener('nhtcss.buttonMiniInit', e => {
     document.querySelector('.nhtcss-btn-wrapper').classList.add('mini')
     document.querySelector('.nht_modal').classList.add('mini')
 })
+document.addEventListener('nhtFormInit', e => {
+    INIT_FUNCTIONS.nhtForm()
+})
 
 
 // Import Flaticon
@@ -663,7 +676,7 @@ document.addEventListener('nhtcss.matchWithDarkReader', matchWithDarkReaderTheme
 
 // Custom cmd + K
 document.addEventListener('nhtcss.cmdK', (e) => {
-    if (!e.detail) return
+    if (!e.detail) returnnet
     const { el, callback } = e.detail
     if (!el) return
     document.addEventListener('keydown', (e) => {

@@ -10,8 +10,7 @@
     #ff9900 33%, #ffff00 33%, #ffff00 50%, #33ff00 50%, #33ff00 66%, #0099ff 66%,
     #0099ff 83.5%, #6633ff 83.5%, #6633ff 100%;
 
-
-  --loading-color: #64C9FA;
+  --loading-color: #64c9fa;
 }
 
 :root {
@@ -290,6 +289,10 @@
   margin: 0 !important;
 }
 
+.overflow-none {
+  overflow: hidden !important;
+}
+
 .fw-500 {
   font-weight: 500 !important;
 }
@@ -327,6 +330,32 @@
 
 .w-100 {
   width: 100% !important;
+}
+
+.nht_form-label {
+  margin-bottom: 20px;
+  position: relative;
+}
+.nht_form-label > .nht_form-input {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 25px 10px 10px 10px;
+  border-radius: 8px;
+  border: 1px solid #000;
+  width: 100%;
+}
+.nht_form-label > label {
+  position: absolute;
+  top: 3px;
+  left: 10px;
+  font-weight: normal;
+  opacity: 0.5;
+}
+.nht_form-label > .prefix {
+  font-size: 14px;
+  position: absolute;
+  left: 10px;
+  top: 25px;
 }
 
 .nht_card {
@@ -403,6 +432,9 @@
   justify-content: center;
   align-items: center;
 }
+.d-flex-important {
+  display: flex !important;
+}
 .d-none-important {
   display: none !important;
 }
@@ -457,7 +489,6 @@
   -moz-transform: scale(0.7) !important;
 }
 
-
 .line-loading {
   width: 100%;
   height: 5px;
@@ -491,13 +522,12 @@
   }
 }
 
-
 .btn-loading {
   transition: all 0.2s ease-in-out;
-  position: relative!important;
+  position: relative !important;
 }
 .btn-loading.loading {
-  cursor: not-allowed!important;
+  cursor: not-allowed !important;
   pointer-events: none;
   filter: grayscale(10%);
   opacity: 90%;
@@ -507,7 +537,7 @@
 }
 .btn-loading .line-loading {
   opacity: 0;
-  position: absolute!important;
+  position: absolute !important;
   bottom: 0;
 }
 .btn-loading .line-loading::before {
