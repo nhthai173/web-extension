@@ -1,8 +1,8 @@
-div[data-uia="timeline-bar"] > div:nth-child(1) {
+div.watch-video--bottom-controls-container [data-uia="timeline-bar"] > div:nth-child(1) {
   background: var(--nyan-cat-load-image) !important;
 }
 
-div[data-uia="timeline-bar"] > div:nth-child(2) {
+div.watch-video--bottom-controls-container [data-uia="timeline-bar"] div[role="presentation"] {
   background: var(--nyan-cat-progress-bg-image);
   background: linear-gradient(
     to bottom,
@@ -10,7 +10,7 @@ div[data-uia="timeline-bar"] > div:nth-child(2) {
   ) !important;
 }
 
-div[data-uia="timeline-knob"] {
+.watch-video--bottom-controls-container [data-uia="timeline-knob"] {
   --normal-scale: 0.7;
   --hover-scale: 1.2;
   border: none !important;
@@ -22,7 +22,8 @@ div[data-uia="timeline-knob"] {
   -webkit-transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
   -moz-transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
 }
-div[data-uia="timeline-knob"]:hover {
+
+.watch-video--bottom-controls-container [data-uia="timeline-knob"]:hover {
   transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
   -webkit-transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
   -moz-transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
