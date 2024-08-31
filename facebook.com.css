@@ -1,112 +1,212 @@
-body.lpm{
-    background-color: #000!important;
+body.lpm {
+  background-color: #000 !important;
 }
 
 .lpm,
-.lpm *{
-    --nav-bar-background: #000!important;
-    /* --card-background: #101010!important; */
-    --card-background: #000!important;
-    --card-background-flat: #000!important;
-    --messenger-card-background: #000!important;
-    /* --surface-background: #101010!important; */
-    --surface-background: #000!important;
-    --web-wash: #000!important;
-    --comment-background: #000!important;
+.lpm * {
+  --nav-bar-background: #000 !important;
+  /* --card-background: #101010!important; */
+  --card-background: #000 !important;
+  --card-background-flat: #000 !important;
+  --messenger-card-background: #000 !important;
+  /* --surface-background: #101010!important; */
+  --surface-background: #000 !important;
+  --web-wash: #000 !important;
+  --comment-background: #000 !important;
 }
 
-.lpm.sbg{
-    --surface-background: #000!important;
+.lpm.sbg {
+  --surface-background: #000 !important;
 }
 
-
-.lpm .card-bg{
-    background-color: transparent!important;
-    background-image: none!important;
+.lpm .card-bg {
+  background-color: transparent !important;
+  background-image: none !important;
 }
-.lpm .card-bg-text{
-    color: #fff!important;
-}
-
-.reel-img-d-none{
-    display: none!important;
-}
-.lpm .reel-img-d-none-lpm{
-    display: none!important;
+.lpm .card-bg-text {
+  color: #fff !important;
 }
 
+.reel-img-d-none {
+  display: none !important;
+}
+.lpm .reel-img-d-none-lpm {
+  display: none !important;
+}
 
+:root,
+* {
+  --accent: rgb(var(--custom-primary));
+  --base-blue: rgb(var(--custom-primary));
+  --blue-link: rgba(var(--custom-primary), 0.9);
+  --primary-button-background: rgb(var(--custom-primary));
+  --primary-button-pressed: rgba(var(--custom-primary), 0.45);
+  --primary-deemphasized-button-text: rgba(var(--custom-primary), 0.9);
+  --primary-deemphasized-button-background: rgba(var(--custom-primary), 0.2);
+  --primary-deemphasized-button-pressed: rgba(var(--custom-primary), 0.2);
+  --primary-deemphasized-button-pressed-overlay: rgba(
+    var(--custom-primary),
+    0.15
+  );
+  --progress-ring-blue-foreground: rgb(var(--custom-primary));
+  --toggle-active-background: rgb(var(--custom-primary));
+  /* --toggle-button-active-background: #E6F2FF; */
+  --switch-active: rgb(var(--custom-primary));
 
-:root, * {
+  --filter-accent: var(--custom-filter-accent);
+  /* --filter-blue-link-icon: invert(73%) sepia(29%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(103.25%) hue-rotate(189deg) brightness(101%) contrast(101%); */
+  /* --filter-primary-icon: invert(89%) sepia(6%) hue-rotate(185deg); */
 
-    --accent: rgb(var(--custom-primary));
-    --base-blue: rgb(var(--custom-primary));
-    --blue-link: rgba(var(--custom-primary), .9);
-    --primary-button-background: rgb(var(--custom-primary));
-    --primary-button-pressed: rgba(var(--custom-primary), .45);
-    --primary-deemphasized-button-text: rgba(var(--custom-primary), .9);
-    --primary-deemphasized-button-background: rgba(var(--custom-primary), 0.2);
-    --primary-deemphasized-button-pressed: rgba(var(--custom-primary), 0.2);
-    --primary-deemphasized-button-pressed-overlay: rgba(var(--custom-primary), 0.15);
-    --progress-ring-blue-foreground: rgb(var(--custom-primary));
-    --toggle-active-background: rgb(var(--custom-primary));
-    /* --toggle-button-active-background: #E6F2FF; */
-    --switch-active: rgb(var(--custom-primary));
-
-    --filter-accent: var(--custom-filter-accent);
-    /* --filter-blue-link-icon: invert(73%) sepia(29%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(103.25%) hue-rotate(189deg) brightness(101%) contrast(101%); */
-    /* --filter-primary-icon: invert(89%) sepia(6%) hue-rotate(185deg); */
-
-    /* --filter-secondary-icon: invert(62%) sepia(98%) saturate(12%) hue-rotate(175deg) brightness(90%) contrast(96%); */
-
+  /* --filter-secondary-icon: invert(62%) sepia(98%) saturate(12%) hue-rotate(175deg) brightness(90%) contrast(96%); */
 }
 
 .dark :root,
 .dark * {
-    --custom-primary: var(--custom-primary-dark);
+  --custom-primary: var(--custom-primary-dark);
 }
 
 .dark.lpm :root,
 .dark.lpm * {
-    --custom-primary: var(--custom-primary-lpm);
+  --custom-primary: var(--custom-primary-lpm);
 }
 
-.custom-icon-filter{
-    filter: var(--custom-icon-filter)!important;
-    -webkit-filter: var(--custom-icon-filter)!important;
+.custom-icon-filter {
+  filter: var(--custom-icon-filter) !important;
+  -webkit-filter: var(--custom-icon-filter) !important;
 }
-.blue-icon-filter{
-    filter: var(--blue-icon-filter-light)!important;
-    -webkit-filter: var(--blue-icon-filter-light)!important;
+.blue-icon-filter {
+  filter: var(--blue-icon-filter-light) !important;
+  -webkit-filter: var(--blue-icon-filter-light) !important;
 }
-.dark .blue-icon-filter{
-    filter: var(--blue-icon-filter-dark)!important;
-    -webkit-filter: var(--blue-icon-filter-dark)!important;
-}
-
-.custom-bg-color{
-    background-color: rgb(var(--custom-primary))!important;
-}
-.custom-text-color{
-    color: rgb(var(--custom-primary))!important;
+.dark .blue-icon-filter {
+  filter: var(--blue-icon-filter-dark) !important;
+  -webkit-filter: var(--blue-icon-filter-dark) !important;
 }
 
-.fb-nyan-cat{
-    display: block !important;
-    margin-top: -9px !important;
-    margin-right: -14px !important;
+.custom-bg-color {
+  background-color: rgb(var(--custom-primary)) !important;
 }
-.fb-nyan-cat:hover{
-    transform: scale(.9) !important;
-    -webkit-transform: scale(.9) !important;
-    -moz-transform: scale(.9) !important;
+.custom-text-color {
+  color: rgb(var(--custom-primary)) !important;
 }
 
+.fb-nyan-cat {
+  display: block !important;
+  margin-top: -9px !important;
+  margin-right: -14px !important;
+}
+.fb-nyan-cat:hover {
+  transform: scale(0.9) !important;
+  -webkit-transform: scale(0.9) !important;
+  -moz-transform: scale(0.9) !important;
+}
 
+.overflow-hidden {
+  overflow: hidden !important;
+}
 
+.nhtcss-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.27);
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 999999999999999999999999999999999999999;
+}
 
+.nhtcss-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.27);
+}
 
+.nhtcss-modal-body {
+  position: relative;
+  background-color: var(--card-background);
+  color: var(--primary-text);
+  border-radius: 8px;
+  padding: 20px;
+  width: 500px;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+}
 
+.nhtcss-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: var(--secondary-button-background);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.nhtcss-form-item {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-text);
+  display: flex;
+  align-items: center;
+}
+
+.nhtcss-form-item label {
+  margin-right: 0.6rem;
+  color: var(--primary-text);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.3333;
+}
+
+.nhtcss-form-item .select {
+  position: relative;
+  width: auto;
+  display: inline-block;
+  border-radius: 6px;
+  background-color: var(--secondary-button-background);
+  cursor: pointer;
+}
+.nhtcss-form-item .select select {
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.3333;
+  color: var(--primary-text);
+  background-color: transparent;
+  border-width: 0;
+  border-radius: 6px;
+  outline: none;
+  box-shadow: none;
+  padding: 0.45rem;
+  /* padding-right: 1.6rem; */
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none;
+  cursor: pointer;
+  z-index: 1000000000;
+}
+.nhtcss-form-item .select i.arrow {
+  position: absolute;
+  top: 11px;
+  right: 7px;
+  width: 13px;
+  height: 13px;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAmmVYSWZNTQAqAAAACAAGARIAAwAAAAEAAQAAARoABQAAAAEAAABWARsABQAAAAEAAABeASgAAwAAAAEAAgAAATEAAgAAABUAAABmh2kABAAAAAEAAAB8AAAAAAAAAEgAAAABAAAASAAAAAFQaXhlbG1hdG9yIFBybyAzLjEuMQAAAAKgAgAEAAAAAQAAABSgAwAEAAAAAQAAABQAAAAAaxFiIgAAAAlwSFlzAAALEwAACxMBAJqcGAAAA2xpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPlBpeGVsbWF0b3IgUHJvIDMuMS4xPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6TWV0YWRhdGFEYXRlPjIwMjMtMDQtMzBUMTI6MTQ6MjErMDc6MDA8L3htcDpNZXRhZGF0YURhdGU+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDAwMC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6UmVzb2x1dGlvblVuaXQ+MjwvdGlmZjpSZXNvbHV0aW9uVW5pdD4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KHCEVLgAAAHZJREFUOI3tkUEKgCAQRR/pxdpF4P03QuAZohAXtZlCIkttE9SDWY3zmO/Az8dQSvWABZbMsjKTxBXIthpiQXMQjhXB5mRHa90CU8F2k8xc0gE+Q+bl7T3y0VdSf3eMM0xC6qVXhQFCJAtPZMAe3wGuJubPC1gBnldI/yblb5MAAAAASUVORK5CYII=");
+  background-size: cover;
+  z-index: 0;
+}
 
 /* Default root for lightmode */
 /* :root {
@@ -387,17 +487,6 @@ body.lpm{
     --dataviz-supplementary-3: rgb(49,162,76);
     --dataviz-supplementary-4: rgb(50,52,54);
 } */
-
-
-
-
-
-
-
-
-
-
-
 
 /* Default root for darkmode */
 /* :root {
