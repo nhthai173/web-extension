@@ -101,6 +101,42 @@ body.lpm {
   -moz-transform: scale(0.9) !important;
 }
 
+
+/* Reel nyan cat progress */
+#viewer_dialog .xcj1dhv.xnalus7.x13w7htt[data-visualcompletion="ignore"] {
+  position: relative!important;
+  background: var(--nyan-cat-progress-bg-image);
+  background: linear-gradient(
+    to bottom,
+    var(--nyan-cat-progress-color)
+  ) !important;
+}
+
+.x1v0du78.xdxvlk3.x1fglp.x1rp6h8o.xg6i1s1.x1rg5ohu.x12lumcd.x5yr21d.x1n2onr6 {
+  background: var(--nyan-cat-load-image) !important;
+}
+
+#viewer_dialog .xcj1dhv.xnalus7.x13w7htt[data-visualcompletion="ignore"]::after {
+  --normal-scale: 0.7;
+  --hover-scale: 1.2;
+  content: "";
+  background: var(--nyan-cat-image) !important;
+  width: 34px !important;
+  height: 21px !important;
+  transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
+  -webkit-transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
+  -moz-transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
+  position: absolute;
+  top: 0;
+  right: -20px;
+}
+
+#viewer_dialog .xcj1dhv.xnalus7.x13w7htt[data-visualcompletion="ignore"]::after:hover {
+  transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
+  -webkit-transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
+  -moz-transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
+}
+
 .overflow-hidden {
   overflow: hidden !important;
 }

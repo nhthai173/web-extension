@@ -62,7 +62,8 @@ span#country-code {
 /* { */
 .html5-play-progress,
 .ytp-play-progress,
-.ytd-progress-bar-line.progress-bar-played {
+.ytd-progress-bar-line.progress-bar-played,
+.YtProgressBarLineProgressBarPlayed {
   background: var(--nyan-cat-progress-bg-image);
   /* background: -moz-linear-gradient(
     top, var(--nyan-cat-progress-color)) !important;
@@ -74,12 +75,14 @@ span#country-code {
 
 .html5-load-progress,
 .ytp-load-progress,
-.ytd-progress-bar-line[role="progressbar"] {
+.ytd-progress-bar-line[role="progressbar"],
+.YtProgressBarLineProgressBarHovered {
   background: var(--nyan-cat-load-image) !important;
 }
 
 .html5-scrubber-button,
-.ytp-scrubber-button {
+.ytp-scrubber-button,
+.YtProgressBarPlayheadProgressBarPlayheadDot {
   border: none!important;
   border-radius: 0 !important;
   background: var(--nyan-cat-image);

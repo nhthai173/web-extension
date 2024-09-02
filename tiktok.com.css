@@ -1,0 +1,70 @@
+:root,
+[data-theme="light"]:root {
+  --custom-primary-rgb: 210, 110, 100;
+  --custom-primary-color: rgba(210, 110, 100, 1) !important;
+  --tux-colorPrimary: rgb(211, 137, 130) !important;
+  --tux-colorLink: rgba(210, 110, 100, 1) !important;
+}
+
+/* Button */
+[data-e2e="browse-follow"],
+[data-e2e="feed-follow"] {
+  color: var(--custom-primary-color) !important;
+  border: 1px solid;
+  border-color: rgba(var(--custom-primary-rgb), 0.7) !important;
+  background-color: transparent !important;
+}
+
+/* Text */
+[data-e2e*="comment-creator"],
+[data-e2e*="see-all"],
+[data-e2e*="see-all"] p {
+  color: var(--custom-primary-color) !important;
+}
+
+.tiktok-shsbhf-StyledVerifyBadge circle {
+  fill: #d26e64 !important;
+  --darkreader-inline-fill: #d26e64 !important;
+}
+
+[id^="one-column-item-"]
+  [class*="BasePlayerContainer"]
+  [class*="DivSeekBarContainer"]
+  div:nth-child(3) {
+  /* background: var(--nyan-cat-load-image) !important; */
+  background: var(--nyan-cat-progress-bg-image);
+  background: linear-gradient(
+    to bottom,
+    var(--nyan-cat-progress-color)
+  ) !important;
+}
+
+/* Hide default knob */
+[class*="DivFixedCursor"] {
+    display: none !important;
+}
+
+.nyan-cat-knob {
+  --normal-scale: 0.7;
+  --hover-scale: 1.2;
+  border: none !important;
+  border-radius: 0 !important;
+  background: var(--nyan-cat-image) !important;
+  width: 34px !important;
+  height: 21px !important;
+  transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
+  -webkit-transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
+  -moz-transform: translate(-5px, -50%) scale(var(--normal-scale)) !important;
+  cursor: pointer!important;
+  position: absolute!important;
+  top: 10px;
+  left: 0;
+  z-index: 9999;
+  transition: 0.1s all ease-in-out;
+}
+
+.nyan-cat-knob:hover {
+  transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
+  -webkit-transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
+  -moz-transform: translate(-5px, -50%) scale(var(--hover-scale)) !important;
+}
