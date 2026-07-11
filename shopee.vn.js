@@ -1,3 +1,16 @@
+function removeShopeeBanner() {
+    const banner = document.querySelector('shopee-banner-popup-stateful')
+    if (banner) {
+        banner.remove()
+        document.body.classList.remove('shopee-no-scroll')
+    }
+}
+
+
+
+
+
+
 /**
  * Get short type of product
  * @returns HTML string
@@ -206,6 +219,11 @@ function appendAction(el, imgURL, options = {open: true, download: true, copy: t
 }
 
 
+function isProductPage() {
+    return document.querySelector('.page-product__breadcrumb') !== null
+}
+
+
 /**
  * Find and append image actions to all images in product modal
  */
@@ -276,6 +294,31 @@ function queryRatingMedia(){
 }
 
 
+/**
+ * Scroll to product section in shop page
+ */
+function scrollToProductSection() {
+    console.log('NHT SHOPEE SCROLL TO PRODUCT SECTION')
+    if (scrolled) return // prevent multiple scroll
+    const productSection = document.querySelector('.shop-page__all-products-section')
+    if (productSection) {
+        const currentPage = productSection.querySelector('.shopee-mini-page-controller__current')
+        if (currentPage) {
+            const pageNumber = parseInt(currentPage.textContent)
+            if (pageNumber > 1) {
+                scrolled = true
+                // only scroll if current position higher than content
+                // const scrollPos = productSection.getBoundingClientRect().top + window.scrollY
+                // if (scrollPos < window.scrollY + window.innerHeight) {
+                    productSection.scrollIntoView({ behavior: 'smooth' })
+                // }
+            }
+        }
+    }
+}
+
+
+
 
 
 
@@ -296,6 +339,7 @@ let APPENDED = {
     VIDEOS: []
 }
 let firstRun = false
+var scrolled = false // to prevent scrollToProductSection() run multiple times
 let AUTO_HIDE_POPUP_BY_CLASS = []
 let INTERVAL_SHOPEE_ID = null
 let activeModalAgain = false // temporary variable use to auto hide popup
@@ -354,10 +398,14 @@ document.addEventListener('nhtcss.modal.hide', e => {
 
 /* ========= MAIN ========= */
 setTimeout(run, 1000);
+setInterval(removeShopeeBanner, 1000);
 
 function run() {
 
     console.log('NHT SHOPEE SCRIPT RUNNING')
+
+    // Auto scroll to product section in shop page
+    scrollToProductSection()
 
     if (!queryRatingMedia()) {
         // Force load rating media

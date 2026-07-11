@@ -1,0 +1,28 @@
+.box_center #formBSX .bot {
+    display: grid;
+    grid-row-gap: 15px;
+}
+
+.box_center #formBSX .bot .item {
+    width: 100%;
+    max-width: 400px;
+}
+
+#formBSX .bot .item .label {
+    font-size: 18px;
+    font-weight: 550;
+}
+
+#formBSX .bot .item .input {
+    width: 100%;
+    font-size: 20px;
+}
+
+#formBSX .bot .item .input[name=txt_captcha] {
+    min-width: 100px;
+    max-width: 150px;
+}
+
+.box_center #formBSX .bot .btnTraCuu {
+    font-size: 20px;
+}

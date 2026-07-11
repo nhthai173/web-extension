@@ -4,174 +4,76 @@ const URL_PARAMS = () => {
     })
 }
 
-
-
-const TogglTrack = (token = '') => {
-    const baseUrl = 'https://api.track.toggl.com/api'
-
-    const auth = () => {
-        if (token) {
-            return {
-                'Authorization': 'Basic ' + Buffer.from(token + ':api_token', 'utf8').toString('base64'),
-            }
+const Descriptions = {}
+const TimerDisplay = {
+    start: 0,
+    text: function () {
+        const start = this.start
+        if (start !== 0) {
+            const curr = Math.floor(new Date().getTime() / 1000)
+            const gap = curr - start
+            let h = Math.floor(gap / 3600)
+            let m = Math.floor((gap - h * 3600) / 60)
+            let s = gap - h * 3600 - m * 60
+            if (h < 10) h = '0' + h
+            if (m < 10) m = '0' + m
+            if (s < 10) s = '0' + s
+            return `${h}:${m}:${s}`
         }
-        return null
+        return '00:00:00'
     }
-
-    const url = (path = '') => {
-        return baseUrl + path
-    }
-
-    const _fetch = async (url, options) => {
-        let opt = {}
-        if (Object.keys(options).length) {
-            opt = { ...options }
-        }
-        if (auth()) {
-            if (opt.headers) {
-                opt.headers = { ...opt.headers, ...auth() }
-            } else {
-                opt.headers = auth()
-            }
-            if (url) {
-                return await fetch(url, opt)
-                    .then(res => {
-                        if (!res.ok) {
-                            let errText = res.status + ' ' + res.statusText
-                            return res.text().then(text => {
-                                throw new Error(errText + '\n' + text)
-                            })
-                        }
-                        else {
-                            return res.json();
-                        }
-                    })
-                    .catch(err => {
-                        console.log('caught it!', err);
-                    });
-            }
-        }
-        return null
-    }
-
-    /**
-     * 
-     * @param {Object} options {"start_date": yyyy-mm-dd, "end_date": yyyy-mm-dd}
-     * 
-     * Docs: https://developers.track.toggl.com/docs/api/time_entries/index.html
-     */
-    const getTimeEntries = async (options = {}) => {
-        let { start_date, end_date } = options
-        start_date = start_date || '2022-07-18'
-        end_date = end_date || new Date(new Date().getTime() + 24 * 3600000).toISOString().split('T')[ 0 ]
-        if (start_date && end_date) {
-            return await _fetch(url(`/v9/me/time_entries?start_date=${start_date}&end_date=${end_date}`), {
-                method: "GET"
-            })
-        }
-        return []
-    }
-
-    const getCurrentTimeEntry = async () => {
-        return await _fetch(url(`/v9/me/time_entries/current`), {
-            method: "GET"
-        })
-    }
-
-    /**
-     * 
-     */
-    const startTimeEntry = async (options = {}) => {
-        const { description, workspace_id, tags } = options
-        const time = new Date()
-        if (workspace_id) {
-            return await _fetch(url('/v9/time_entries'), {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "created_with": "nht_bot",
-                    "description": description || '',
-                    "tags": tags || [],
-                    "billable": false,
-                    "start": time.toISOString(),
-                    "wid": workspace_id,
-                    "duration": -1 * Math.floor(time.getTime() / 1000)
-                })
-            })
-        }
-
-        return await _fetch(url('/v8/time_entries/start'), {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "time_entry": {
-                    "created_with": "nht_bot",
-                    "description": description || '',
-                    "tags": tags || [],
-                    "billable": false,
-                }
-            })
-        })
-
-    }
-
-    /**
-     * 
-     */
-    const stopTimeEntry = async (workspace_id = '') => {
-        let startedTime = 0
-        let time_entry_id = ''
-        const time = new Date()
-        const curr = await getCurrentTimeEntry()
-        if (curr && curr.id) {
-            time_entry_id = curr.id
-            startedTime = -1 * curr.duration
-        }
-        if (time_entry_id) {
-            if (workspace_id) {
-                return await _fetch(url(`/v9/workspaces/${workspace_id}/time_entries/${time_entry_id}`), {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        "stop": time.toISOString(),
-                        "duration": Math.floor(time.getTime() / 1000) - startedTime
-                    })
-                })
-            }
-
-            return await _fetch(url(`/v8/time_entries/${time_entry_id}/stop`), {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-
-        }
-        return null
-    }
-
-    const TogglTrack = () => {
-        return {
-            getTimeEntries,
-            getCurrentTimeEntry,
-            startTimeEntry,
-            stopTimeEntry
-        }
-    }
-    return TogglTrack()
-
 }
-const toggl = TogglTrack('2dcf511405f3750c754336711bd749d9')
 
+const Toggl = {
+
+    ws: new WebSocket('ws://localhost:173/toggl'),
+    init: function() {
+        this.ws.onmessage = function(msg) {
+            if (!this.onmessage) {
+                console.log('Receive from WebSocket', msg)
+                return
+            }
+            try {
+                this.onmessage()
+            } catch (e) {}
+        }
+    },
+
+    _wsSendMsg: function(msg, times = 0) {
+        return new Promise((resolve, reject) => {
+            function _send() {
+                if (!this.ws || this.ws.readyState !== 1) {
+                    return false
+                }
+                this.ws.send(msg)
+                return true
+            }
+            function _check() {
+                console.log(times)
+                times++
+                const r = _send() || times > 7
+                if (r) resolve()
+                return r
+            }
+            if (!_check()) setTimeout(_check, 50)
+            if (times >= 7) {
+                console.error('WebSocket connection failed')
+                reject('WebSocket connection failed')
+            }
+        })
+    },
+
+    startTimeEntry: function(description = '', tag = []) {
+        if (tag && typeof tag == 'string') {
+            tag = [ tag ]
+        }
+        return this._wsSendMsg(JSON.stringify({ method: 'START_TIME', description, tag }))
+    },
+};
+Toggl.init();
 
 /**
- * 
+ * Get page/database title
  * @param {HTMLElement} el 
  * @param {string} blockId 
  * @param {number} type 0: page, 1: database. Default is 0
@@ -198,7 +100,7 @@ const getTitle = (el, blockId, type = 0) => {
 }
 
 
-
+// Get page/databse info {type, id, name, togglTag}
 function getInfo() {
     const url = location.pathname
     const pParam = URL_PARAMS().p
@@ -253,8 +155,8 @@ function showModal() {
     const el = document.createElement('div')
     el.className = 'nht_page-info'
     el.innerHTML = `
-            <div class="nht_card w-100 mt-15 bg-auto">
-                <div class="nht_2-side mb-15">
+            <div class="nht_card w-100 mt-15-px bg-auto">
+                <div class="nht_2-side mb-15-px">
                     <div class="ttl">
                         <span class="text-auto bold">Title:</span>
                     </div>
@@ -262,7 +164,7 @@ function showModal() {
                         <span class="text-muted">${info.name}</span>
                     </div>
                 </div>
-                <div class="nht_2-side mb-15">
+                <div class="nht_2-side mb-15-px">
                     <div class="ttl">
                         <span class="text-auto bold">Type:</span>
                     </div>
@@ -270,7 +172,7 @@ function showModal() {
                         <span class="text-muted">${info.type}</span>
                     </div>
                 </div>
-                <div class="nht_2-side mb-15">
+                <div class="nht_2-side mb-15-px">
                     <div class="ttl">
                         <span class="text-auto bold">ID:</span>
                     </div>
@@ -289,32 +191,22 @@ function showModal() {
             </div>
 
 
-            <div class="nht_card w-100 bg-auto mb-4">
+            <div class="nht_card w-100 bg-auto mb-4-px">
                 <div class="nht_2-side" style="height: 28px">
                     <div>
                         <span class="nht_title-sm bold text-toggl">Time Tracker</span>
                     </div>
                     <div>
-                        <span class="text-auto">00:00:00</span>
+                        <span class="text-auto" id="current_timer">00:00:00</span>
                     </div>
                 </div>
 
-                <div class="start-prompt">
-                    <div class="hr hr-sm muted"></div>
-                    <div class="nht_2-side mt-8">
-                        <span class="text-muted">Description</span>
-                    </div>
-                    <form class="d-flex-center mt-8" autocomplete="off" data-no-focus-lock="true">
-                        <textarea class="m-0 description" id="nht_track_description" autocomplete="off">${info.name}</textarea>
-                    </form>
-                    <div class="d-flex-center mt-15">
-                        <span class="btn btn-toggl">Start Timer</span>
-                    </div>
-                </div>
+                <div class="toggl-form-content"></div>
+
             </div>
             <!--
             <div class="nht_card w-100 bg-auto">
-                <div class="d-flex-center mt-4 mb-8">
+                <div class="d-flex-center mt-4-px mb-8-px">
                     <div class="nht_icon no-data"></div>
                 </div>
                 <div class="d-flex-center">
@@ -350,18 +242,17 @@ function showModal() {
             </div>
             -->
         `
-
     $modal.querySelector('.nht_modal-content').appendChild(el)
     document.dispatchEvent(new Event('nhtcss.init'))
-    descriptionForm()
+    loadTogglInfo()
 }
 
 function emptyModal() {
     document.querySelector('.nht_modal-content').innerHTML = ''
 }
 
-
-function descriptionForm() {
+// Render Toggl to modal
+async function loadTogglInfo(taskInfo = {}) {
     const copyEvents = [
         'copy',
         'cut',
@@ -378,28 +269,98 @@ function descriptionForm() {
         e.stopPropagation()
         if (e.stopImmediatePropagation) e.stopImmediatePropagation()
     }
-    const input = document.querySelector('#nht_track_description')
-    if(input){
+
+    // Get current page/database detail
+    if (Object.keys(taskInfo).length === 0) {
+        taskInfo = getInfo()
+    }
+
+    // const currentTrack = await toggl.getCurrentTimeEntry()
+    const currentTrack = null
+    const isTracking = currentTrack && currentTrack.tags && currentTrack.tags.includes(taskInfo.togglTag)
+    const trackDescription = isTracking ? currentTrack.description : (Descriptions[ taskInfo.togglTag ] || taskInfo.name)
+    const el = document.querySelector('.toggl-form-content')
+
+
+    if (!isTracking) {
+        const form = document.createElement('div')
+        form.innerHTML = `
+            <div class="hr hr-sm muted"></div>
+            <div class="nht_2-side mt-8-px">
+                <span class="text-muted">Description</span>
+            </div>
+            <form class="d-flex-center mt-8-px" autocomplete="off" data-no-focus-lock="true">
+                <textarea class="m-0-px description" id="nht_track_description" autocomplete="off">${trackDescription}</textarea>
+            </form>
+            <div class="d-flex-center mt-15-px">
+                <span class="btn btn-toggl btn-loading">
+                    Start Timer
+                    <div class="line-loading"></div>
+                </span>
+            </div>`
+        el.appendChild(form)
+        const input = document.querySelector('#nht_track_description')
         copyEvents.forEach((evt) => {
             input.addEventListener(evt, rejectOtherHandlers, {
                 capture: true,
             })
         })
+        input.addEventListener('input', (e) => {
+            Descriptions[ taskInfo.togglTag ] = e.target.value
+        })
+        form.querySelector('.btn-toggl').addEventListener('click', async(e) => {
+            e.target.classList.add('loading')
+            const description = form.querySelector('.description').value
+            // toggl.startTimeEntry({
+            //     description,
+            //     workspace_id: 6482073,
+            //     tags: [ taskInfo.togglTag ]
+            // }).then(entry => {
+            //     // buttonLoading(e.target, false)
+            //     loadTogglInfo()
+            // })
+
+            // ============== //
+            // wsSendMsg(JSON.stringify({ method: 'START_TIME', description, tag: taskInfo.togglTag }))
+
+            Toggl.startTimeEntry(description, taskInfo.togglTag)
+                .then(() => e.target.classList.remove('loading'))
+                .catch(() => e.target.classList.remove('loading'))
+            
+        })
+    } else {
+        const form = document.createElement('div')
+        form.innerHTML = `
+            <div class="hr hr-sm muted"></div>
+            <div class="nht_2-side mt-8-px">
+                <span class="text-muted">Description</span>
+            </div>
+            <form class="d-flex-center mt-8-px" autocomplete="off" data-no-focus-lock="true" disabled>
+                <textarea class="m-0-px description" id="nht_track_description" autocomplete="off" disabled>${trackDescription}</textarea>
+            </form>
+            <div class="d-flex-center mt-15-px">
+                <span class="btn">Stop Timer</span>
+            </div>`
+        setInterval(() => {
+            let start = currentTrack.duration
+            if (start) start *= -1
+            TimerDisplay.start = start || 0
+            document.querySelector('#current_timer').innerText = TimerDisplay.text()
+        }, 1000)
     }
+
+
 }
 
 
 
 run()
 function run() {
+    document.documentElement.style.setProperty('--loading-color', '#cf75cc')
+
     document.dispatchEvent(new CustomEvent('nhtcss.buttonInit'))
 
     document.addEventListener('nhtcss.modal.show', showModal)
     document.addEventListener('nhtcss.modal.hide', emptyModal)
-
-    // const script = document.createElement('script')
-    // script.src = '/Users/thainguyen/Documents/web-extension/api.toggl.js'
-    // script.type = 'text/javascript'
-    // document.head.appendChild(script)
 
 }

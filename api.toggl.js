@@ -11,7 +11,8 @@ function TogglTrack (token = '', default_start_date = '') {
     const auth = () => {
         if (token) {
             return {
-                'Authorization': 'Basic ' + Buffer.from(token + ':api_token', 'utf8').toString('base64'),
+                // 'Authorization': 'Basic ' + Buffer.from(token + ':api_token', 'utf8').toString('base64'),
+                'Authorization': 'Basic ' + btoa(token + ':api_token'),
             }
         }
         return null
@@ -33,6 +34,7 @@ function TogglTrack (token = '', default_start_date = '') {
                 opt.headers = auth()
             }
             if (url) {
+                console.log(opt.headers)
                 return await fetch(url, opt)
                     .then(res => {
                         if (!res.ok) {
@@ -175,9 +177,9 @@ function TogglTrack (token = '', default_start_date = '') {
     //     workspace_id: 6482073,
     //     tags: ['DevTest']
     // })
-    // const current = await toggl.getCurrentTimeEntry()
-    const stopTimer = await toggl.stopTimeEntry(6482073)
+    const current = await toggl.getCurrentTimeEntry()
+    // const stopTimer = await toggl.stopTimeEntry(6482073)
 
-    console.log(getTime())
-    console.log(stopTimer)
+    // console.log(getTime())
+    console.log(current)
 })()

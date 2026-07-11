@@ -2,3 +2,19 @@
     /* filter: grayscale(1) invert(1) hue-rotate(180deg); */
     filter: grayscale(1) invert(1) sepia(1) saturate(0);
 }
+
+.btn-blue {
+    color: #0078d4;
+    background-color: transparent;
+    border: 1px solid #0078d4;
+    border-radius: 6px;
+    padding: 5px;
+    transition: .2s ease-in-out;
+    cursor: pointer;
+}
+.btn-blue:active,
+.btn-blue.active {
+    background-color: #0078d4;
+    color: #fff;
+    transition: .2s ease-in-out;
+}

@@ -4,7 +4,7 @@ var url = window.location.href
 if (url.includes('script.google.com') && url.includes('/exec')) {
     function removeWarning() {
         const w = document.getElementById('warning')
-        if (w) w.innerHTML = ""
+        if (w) w.closest('tr').remove()
     }
     setInterval(removeWarning, 1000);
 }

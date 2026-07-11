@@ -246,6 +246,43 @@ INIT_FUNCTIONS.nhtForm = () => {
 
 
 
+
+
+
+
+/* ============ LOOP FUNCTIONS ============ */
+
+let loopFunctions = {}
+
+loopFunctions.RoPhimSkipVideoAds = {
+    time: 1000,
+    run: () => {
+        try {
+            const skipBtn = document.querySelector('.jw-skip.jw-reset')
+            const offVolume = document.querySelector('.jw-icon-volume');
+            if (!skipBtn || !offVolume) return
+            if (!offVolume.classList.contains('jw-off')) {
+                offVolume.click();
+            }
+            skipBtn.dispatchEvent(new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            }));
+        } catch (e) {
+            console.error('RoPhim Skip Video Ads Error:', e)
+        }
+    }
+}
+
+
+
+/* ============ END LOOP FUNCTIONS ============ */
+
+
+
+
+
 /* ============ IMPORT LIBRARY ============ */
 document.addEventListener('import.flaticon', () => {
     const urls = [
@@ -627,6 +664,14 @@ function init() {
         try {
             INIT_FUNCTIONS[ i ]()
         } catch (e) { }
+    }
+
+    // loop call
+    for (const i in loopFunctions) {
+        const loop = loopFunctions[ i ]
+        if (loop && loop.run && loop.time) {
+            setInterval(loop.run, loop.time)
+        }
     }
 }
 

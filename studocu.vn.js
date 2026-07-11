@@ -24,6 +24,7 @@ function stuInit(times) {
     document.dispatchEvent(new CustomEvent('nhtcss.buttonInit'));
     document.dispatchEvent(new CustomEvent('nhtcss.init'));
     initModal();
+    removePremiumBanner();
 }
 
 function onLocationChange() {
@@ -74,6 +75,45 @@ function hideModal() {
 
 function showModal() {
     document.querySelector('nht').classList.remove('d-none-important');
+}
+
+function removePremiumBanner() {
+    try {
+        // query class has prefix "ViewerContainer_premium-banner-wrapper"
+        const banner = document.querySelector('[class^="ViewerContainer_premium-banner-wrapper"]');
+        if (banner) {
+            // find float wrapper "FloatingComponentsWrapper*"
+            banner.closest('[class^="FloatingComponentsWrapper"]').remove();
+        }
+    } catch (error) {
+        console.error('Error removing premium banner:', error);
+        alert('Error removing premium banner: ' + error.message);
+    }
+}
+
+function removeBlurFilter() {
+    try {
+        document.querySelectorAll('[class^="PremiumPageClarificationBanner_container"]').forEach(el => {
+            try {
+                el.remove();
+            } catch (error) {
+                console.error('Error removing premium clarification banner:', error);
+            }
+        });
+        document.querySelectorAll('[class^="DocumentPage_blurred-image-wrapper"]').forEach(el => {
+            try {
+                el.style.filter = 'none';
+                el.style.webkitFilter = 'none';
+                el.style.backdropFilter = 'none';
+                el.style.userSelect = 'text';
+            } catch (error) {
+                console.error('Error removing blur filter from an element:', error);
+            }
+        })
+    } catch (error) {
+        console.error('Error removing blur filter:', error);
+        alert('Error removing blur filter: ' + error.message);
+    }
 }
 
 

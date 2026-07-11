@@ -1,12 +1,13 @@
 var monDangKy = `
-
+IS211.O11.HTCL
+IS211.O11.HTCL.2
 `;
 
 setTimeout(() => {
 
     DangKy(monDangKy);
 
-}, 2500);
+}, 2000);
 
 
 
